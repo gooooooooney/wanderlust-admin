@@ -12,9 +12,9 @@ export const {
   signOut
 } = NextAuth({
   adapter: PrismaAdapter(db),
-  pages: {
-    signIn: "/sign-in",
-  },
+  // pages: {
+  //   signIn: "/sign-in",
+  // },
   session: { strategy: "jwt" },
 
   callbacks: {

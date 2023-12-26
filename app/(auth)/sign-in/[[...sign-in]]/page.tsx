@@ -1,10 +1,7 @@
-import { InputWithLabel } from "@/components/input-with-label";
-import { Divider } from "./_components/divider";
 import { Button } from "@/components/ui/button";
 import { FcGoogle } from "react-icons/fc";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import { useState } from "react";
 import { SignInForm } from "./_components/signin-form";
 
 const SignInPage: React.FC = () => {
@@ -21,15 +18,6 @@ const SignInPage: React.FC = () => {
             <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
               Sign in to your account
             </h2>
-            {/* <p className="mt-2 text-sm leading-6 text-gray-500">
-              Not a member?{" "}
-              <a
-                href="#"
-                className="font-semibold text-indigo-600 hover:text-indigo-500"
-              >
-                Start a 14 day free trial
-              </a>
-            </p> */}
           </div>
           <div className="mt-10">
             <div>

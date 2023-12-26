@@ -30,17 +30,16 @@ model Account {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String   @unique
+  id             String    @id @default(cuid())
+  name           String?
+  email          String    @unique
   hashedPassword String
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  roleIds       String[]
-  roles         Role[]
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  pageInfo       PageInfo?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
 
 model VerificationToken {
@@ -51,27 +50,16 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Role {
-  id          String       @id @default(uuid())
-  name        String       @unique
-  permissions Permission[]
-  userIds     String[]
-  users       User[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+model PageInfo {
+  id               String  @id @default(uuid())
+  User             User    @relation(fields: [userId], references: [id])
+  userId           String  @unique
+  signInCoverImage String?
+  theme            Theme   @default(LIGHT)
 }
 
-// 权限模型，这里可以根据实际情况添加更多权限操作
-model Permission {
-  id     String  @id @default(uuid())
-  action String
-  routes Route[] 
-  roles  Role[]  
-}
-
-model Route {
-  id          String       @id @default(uuid())
-  path        String // 路由路径
-  description String? // 路由描述
-  permissions Permission[]
+enum Theme {
+  LIGHT
+  DARK
+  SYSTEM
 }

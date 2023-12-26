@@ -3,6 +3,7 @@ import Google from "next-auth/providers/google"
 import { db } from "@/lib/db"
 import GitHubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials"
+import * as bcrypt from "bcryptjs"
 
 export default {
   providers: [
@@ -42,12 +43,12 @@ export default {
         }
 
         // check to see if password matches
-        // const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword)
+        const passwordMatch = await bcrypt.compare(credentials.password as string, user.hashedPassword)
 
-        // // if password does not match
-        // if (!passwordMatch) {
-        //   throw new Error('Incorrect password')
-        // }
+        // if password does not match
+        if (!passwordMatch) {
+          throw new Error('Incorrect password')
+        }
 
         return user;
       }
