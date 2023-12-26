@@ -38,7 +38,7 @@ const navigation: NavigationProps[] = [
 export default function Sidebar() {
   const collapsed = useSidebar(s => s.collapsed)
   return (
-    <div className={cn("flex max-w-64  flex-col duration-500  pt-10 overflow-y-auto  bg-background shadow-xl", collapsed ? "w-20" : "w-72")}>
+    <div className={cn("flex max-w-64  flex-col duration-500  pt-10 overflow-y-auto  bg-background shadow-md", collapsed ? "w-20" : "w-72")}>
       <nav className="flex flex-1 flex-col">
         <ul role="list" className="flex flex-1 flex-col gap-y-7">
           <li>

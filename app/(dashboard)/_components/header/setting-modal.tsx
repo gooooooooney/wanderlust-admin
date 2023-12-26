@@ -67,7 +67,7 @@ export const SettingModal = ({
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm" className="w-full justify-start">
           <GearIcon className="h-4 w-4 mr-2" />
-          Setting user settings
+          Settings
         </Button>
       </DialogTrigger>
       <DialogContent>

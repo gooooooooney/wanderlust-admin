@@ -31,7 +31,7 @@ export const MenuItem = ({ item }: { item: NavigationProps }) => {
       >
         <AccordionItem className="border-none" value={item.name}>
           <AccordionTrigger showChevron={!collapsed} className={cn(
-            item.current && "bg-muted",
+            item.current && "bg-muted ",
             'group relative flex h-12 justify-between px-4 py-2 text-base duration-200 hover:bg-muted hover:no-underline rounded-md'
           )}>
             <item.icon

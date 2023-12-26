@@ -7,7 +7,7 @@ export function Header() {
 
   return (
     <header className="bg-background">
-      <nav className="border-b mx-auto flex items-center justify-between px-6 py-4 lg:px-8" aria-label="Global">
+      <nav className="shadow-md mx-auto flex items-center justify-between px-6 py-4 lg:px-8" aria-label="Global">
         <Menu />
         <Logo />
         <Actions />
