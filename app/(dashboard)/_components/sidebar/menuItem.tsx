@@ -1,17 +1,20 @@
 "use client"
 import { cn } from "@/lib/utils"
-import { NavigationProps } from "./menu"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Text } from "@/components/catalyst/text"
+import { Text } from "@/components/typography/text"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { useSidebar } from "@/store/use-sidebar"
 import { use, useEffect, useState } from "react"
+import { Navigation } from "@/lib/navigation"
+import { Hint } from "@/components/hint"
+import { useMediaQuery } from "usehooks-ts"
 
 
-export const MenuItem = ({ item }: { item: NavigationProps }) => {
+export const MenuItem = ({ item, pathname }: { pathname: string, item: Navigation }) => {
   const collapsed = useSidebar(s => s.collapsed)
   const [value, setValue] = useState("")
+  const matches = useMediaQuery("(max-width: 1024px)");
   const [lastOpenItem, setLastOpenItem] = useState("");
   useEffect(() => {
     if (collapsed) {
@@ -29,18 +32,22 @@ export const MenuItem = ({ item }: { item: NavigationProps }) => {
         value={value}
         onValueChange={setValue}
       >
+
         <AccordionItem className="border-none" value={item.name}>
+
           <AccordionTrigger showChevron={!collapsed} className={cn(
-            item.current && "bg-muted ",
-            'group relative flex h-12 justify-between px-4 py-2 text-base duration-200 hover:bg-muted hover:no-underline rounded-md'
+            item.href == pathname && "bg-muted ",
+            'group relative flex h-12 justify-between px-4 py-2 mx-2.5 text-base duration-200 hover:bg-muted hover:no-underline rounded-md'
           )}>
-            <item.icon
-              className={cn(
-                'h-6 w-6 shrink-0 !rotate-0',
-                item.color
-              )}
-              aria-hidden="true"
-            />
+            <Hint asChild side="right" className={!collapsed ? "hidden" : ""} label={item.name}>
+              <item.icon
+                className={cn(
+                  'h-6 w-6 shrink-0 !rotate-0',
+                  item.color
+                )}
+                aria-hidden="true"
+              />
+            </Hint>
             {
 
               <Text className={cn("absolute left-12 duration-200 ",
@@ -51,35 +58,39 @@ export const MenuItem = ({ item }: { item: NavigationProps }) => {
 
             }
           </AccordionTrigger>
+
           <AccordionContent className="ml-4 pb-0">
             <ul role="list" className="mt-1 space-y-1">
               {item.children.map((child) => (
-                <MenuItem key={child.name} item={child} />
+                <MenuItem pathname={pathname} key={child.name} item={child} />
               ))}
             </ul>
           </AccordionContent>
         </AccordionItem>
-      </Accordion>
+      </Accordion >
     ) : (
       <li key={item.name}>
-        <Button variant="ghost" asChild>
+
+        <Button variant="ghost"
+          asChild
+          className={cn(
+            "group relative flex h-12 justify-between px-4 py-4 mx-2.5 text-base duration-200 hover:bg-muted hover:no-underline rounded-md",
+            item.href == pathname && "bg-muted",
+          )}>
           <Link
             href={item.href}
-            className={cn(
-              item.current && "bg-muted",
-              'group relative flex !h-12 justify-between px-4 py-2 text-base duration-200 hover:bg-muted hover:no-underline w-full',
-
-            )}
           >
-            <item.icon
-              className={cn(
-                'h-6 w-6 shrink-0 !rotate-0',
-                item.color
-              )}
-              aria-hidden="true"
-            />
+            <Hint asChild side="right" className={!collapsed ? "hidden" : ""} label={item.name}>
+              <item.icon
+                className={cn(
+                  'h-6 w-6 shrink-0 !rotate-0',
+                  item.color
+                )}
+                aria-hidden="true"
+              />
+            </Hint>
             <Text className={cn("absolute left-12 duration-200 ",
-              collapsed && " opacity-0 transition-all duration-300"
+              !matches && collapsed && " opacity-0 transition-all duration-300"
             )}>
               {item.name}
             </Text>

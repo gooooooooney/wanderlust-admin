@@ -23,7 +23,7 @@ export const UserButton = async ({ props }: any) => {
 
       <DropdownMenuContent align="end" className="w-60">
         <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
-        <SettingModal initialImage={user.image} initialUsername={user.name} />
+        {/* <SettingModal initialImage={user.image} initialUsername={user.name} /> */}
         {/* <SheetDemo /> */}
         <DropdownMenuSeparator />
         <form action={async () => {

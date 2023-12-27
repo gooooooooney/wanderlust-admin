@@ -50,12 +50,20 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Settings {
+  id        String  @id @default(uuid())
+  role      String  @unique
+  signInCoverImage String?
+  signUpCoverImage      String?
+}
+
 model PageInfo {
   id               String  @id @default(uuid())
   User             User    @relation(fields: [userId], references: [id])
   userId           String  @unique
-  signInCoverImage String?
   theme            Theme   @default(LIGHT)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 enum Theme {

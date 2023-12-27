@@ -5,10 +5,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-interface HintProps {
+type HintProps = {
   label: string;
   children: React.ReactNode;
   asChild?: boolean;
+  sideOffset?: number
+  className?: string
   side?: "top" | "bottom" | "left" | "right";
   align?: "start" | "center" | "end";
 };
@@ -19,16 +21,19 @@ export const Hint = ({
   asChild,
   side,
   align,
+  className,
+  sideOffset = 20,
 }: HintProps) => {
   return (
     <TooltipProvider>
-      <Tooltip delayDuration={0}>
-        <TooltipTrigger asChild={asChild}>
+      <Tooltip delayDuration={200}>
+        <TooltipTrigger  asChild={asChild}>
           {children}
         </TooltipTrigger>
         <TooltipContent 
-          className="text-primary bg-background" 
           side={side}
+          className={className}
+          sideOffset={sideOffset}
           align={align}
         >
           <p className="font-semibold">

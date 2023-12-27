@@ -21,9 +21,9 @@
     --wl-bg: 33 69% 94%;
     --background: 36 100% 98%;
     --foreground: 20 14.3% 4.1%;
-    --card: 0 0% 100%;
+    --card: 36 100% 98%;
     --card-foreground: 20 14.3% 4.1%;
-    --popover: 0 0% 100%;
+    --popover: 36 100% 98%;
     --popover-foreground: 20 14.3% 4.1%;
     --primary: 24.6 95% 53.1%;
     --primary-foreground: 60 9.1% 97.8%;
@@ -45,9 +45,9 @@
     --wl-bg: 304 16% 21%;
     --background: 214 28% 15%;
     --foreground: 60 9.1% 97.8%;
-    --card: 20 14.3% 4.1%;
+    --card: 214 28% 15%;
     --card-foreground: 60 9.1% 97.8%;
-    --popover: 20 14.3% 4.1%;
+    --popover: 214 28% 15%;
     --popover-foreground: 60 9.1% 97.8%;
     --primary: 20.5 90.2% 48.2%;
     --primary-foreground: 60 9.1% 97.8%;

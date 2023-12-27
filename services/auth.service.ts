@@ -13,6 +13,9 @@ export class AuthService {
 
     const user = await db.user.findUnique({
       where: { id: self.id },
+      include: {
+        pageInfo: true,
+      }
     });
 
     if (!user) {

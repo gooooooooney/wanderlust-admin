@@ -10,6 +10,7 @@ const authPaths = [
 ]
 
 export default middleware((req) => {
+  
   if (authPaths.includes(req.nextUrl.pathname)) {
     if (req.auth) {
       const redirectUrl = new URL("/", req.url);
@@ -28,5 +29,5 @@ export default middleware((req) => {
 })
 
 export const config = {
-  matcher: ["/u/:path*", "/sign-in", "/sign-up"],
+  matcher: ["/u/:path*", "/sign-in", "/sign-up", "/"],
 }

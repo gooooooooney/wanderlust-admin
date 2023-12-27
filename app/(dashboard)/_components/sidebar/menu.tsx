@@ -1,20 +1,18 @@
+"use client"
+import { usePathname } from "next/navigation"
 import { MenuItem } from "./menuItem"
 import type { LucideIcon } from "lucide-react"
+import { Navigation, navigation } from "@/lib/navigation"
 
-export type NavigationProps = {
-  name: string
-  href: string
-  color: string,
-  icon: LucideIcon
-  current?: boolean
-  children?: NavigationProps[]
-}
 
-export const Menu = ({navigation}: {navigation: NavigationProps[]}) => {
+
+export const Menu = () => {
+  const pathname = usePathname()
+
   return (
-    <ul role="list" className="-mx-2 space-y-1 px-6">
+    <ul role="list" className=" space-y-1 ">
       {navigation.map((item) => (
-        <MenuItem key={item.name} item={item} />
+        <MenuItem pathname={pathname} key={item.name} item={item} />
       ))}
     </ul>
   )

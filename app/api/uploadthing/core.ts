@@ -3,6 +3,7 @@ import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { db } from "@/lib/db";
 import { UserService } from "@/services/user.service";
 import { AuthService } from "@/services/auth.service";
+import { SettingService } from "@/services/setting.service";
 
 const f = createUploadthing();
 
@@ -38,14 +39,9 @@ export const ourFileRouter = {
       return { user: self }
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      await db.pageInfo.update({
-        where: {
-          userId: metadata.user.id,
-        },
-        data: {
-          signInCoverImage: file.url,
-        },
-      });
+      await SettingService.updateSetting({
+        signInCoverImage: file.url
+      })
 
       return { fileUrl: file.url };
     })

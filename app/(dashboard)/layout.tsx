@@ -9,7 +9,9 @@ const DashboardLayout = ({ children }: {
       <Header />
       <main className="flex  flex-1">
         <Sidebar />
-        {children}
+        <div className="p-4 rounded-b-none rounded-tr-none rounded-md w-full border-l border-t dark:border-gray-700">
+          {children}
+        </div>
       </main>
     </div>
   )

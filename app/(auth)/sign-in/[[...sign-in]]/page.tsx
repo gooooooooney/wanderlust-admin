@@ -3,8 +3,10 @@ import { FcGoogle } from "react-icons/fc";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SignInForm } from "./_components/signin-form";
+import { SettingService } from "@/services/setting.service";
 
-const SignInPage: React.FC = () => {
+const SignInPage: React.FC = async () => {
+  const setting = await SettingService.getSetting();
   return (
     <div className="flex min-h-full flex-1">
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -91,7 +93,7 @@ const SignInPage: React.FC = () => {
         <Image
           fill
           className="absolute inset-0 h-full w-full object-cover object-top"
-          src="/img/seaside.jpeg"
+          src={setting?.signInCoverImage || "/img/seaside.jpeg"}
           alt=""
         />
       </div>
