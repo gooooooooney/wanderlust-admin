@@ -19,7 +19,7 @@ export default async function SettingsPage() {
         </Description>
       </div>
       <Separator orientation="horizontal" className="my-4" />
-      <div className="flex flex-col gap-y-4 sm:grid sm:grid-cols-2 ">
+      <div className="flex flex-col gap-y-4 ">
         <SettingUserInfo initialImage={user.image} initialUsername={user.name} />
         <SettingSignIn initialSignInImage={settings?.signInCoverImage} />
       </div>

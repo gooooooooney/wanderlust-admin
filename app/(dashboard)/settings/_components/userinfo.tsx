@@ -60,7 +60,7 @@ export const SettingUserInfo = ({
   return (
     <Card className="max-w-md">
       <CardHeader>
-        Setting User Info
+        User Info
       </CardHeader>
       <CardContent>
         <form onSubmit={onSubmit} className="space-y-4">

@@ -8,6 +8,7 @@ const config = withUt({
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
+    "./lib/navigation.{ts,tsx}",
 	],
   // prefix: "wl",
   theme: {

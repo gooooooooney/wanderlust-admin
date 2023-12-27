@@ -45,7 +45,7 @@ export const SettingSignIn = ({
   return (
     <Card className="max-w-md">
       <CardHeader>
-        Setting Sign In Cover Image
+        Sign In Cover Image
       </CardHeader>
       <CardContent>
         {image ? (
