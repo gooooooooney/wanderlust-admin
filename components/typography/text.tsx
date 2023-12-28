@@ -25,7 +25,7 @@ export function Text({ className, ...props }: React.ComponentPropsWithoutRef<'p'
 
 export function Description({ className, ...props }: React.ComponentPropsWithoutRef<'h1'>) {
   return (
-    <p className='text-sm text-muted-foreground' {...props} />
+    <p className={cn('text-sm text-muted-foreground', className)} {...props} />
   )
 }
 
