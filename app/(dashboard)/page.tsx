@@ -1,5 +1,4 @@
-import { Description, H3 } from "@/components/typography/text"
-import { Separator } from "@/components/ui/separator"
+import { Heading } from "@/components/heading"
 
 const sentences = [
   "Wishing you a productive and wonderful day!",
@@ -19,11 +18,8 @@ const DashboardPage = () => {
   const index = Math.floor(Math.random() * sentences.length)
   return (
     <div className="flex flex-col gap-y-4">
-      <H3 className="mt-4">{sentences[index]}</H3>
-      <Description>
-        This is your dashboard. You can see your recent activity here.
-      </Description>
-      <Separator orientation="horizontal" className="my-4" />
+
+      <Heading title={sentences[index]} description="This is your dashboard. You can see your recent activity here." />
 
     </div>
   )

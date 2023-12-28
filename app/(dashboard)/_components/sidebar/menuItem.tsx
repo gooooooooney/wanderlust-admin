@@ -51,7 +51,7 @@ export const MenuItem = ({ item, pathname }: { pathname: string, item: Navigatio
             {
 
               <Text className={cn("absolute left-12 duration-200 ",
-                collapsed && " opacity-0 transition-all duration-300"
+              !matches && collapsed && " opacity-0 transition-all duration-300"
               )}>
                 {item.name}
               </Text>

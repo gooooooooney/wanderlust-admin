@@ -14,14 +14,17 @@ export class AuthService {
     const user = await db.user.findUnique({
       where: { id: self.id },
       include: {
-        pageInfo: true,
+        pageInfo: {
+          include: {
+            banner: true
+          }
+        },
       }
     });
 
     if (!user) {
       throw new Error("Not found");
     }
-
     return user;
   }
 

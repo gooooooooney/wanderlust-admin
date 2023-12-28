@@ -2,8 +2,7 @@ import { AuthService } from "@/services/auth.service";
 import { SettingUserInfo } from "./_components/userinfo";
 import { SettingSignIn } from "./_components/sign-in";
 import { SettingService } from "@/services/setting.service";
-import { Description, H3 } from "@/components/typography/text";
-import { Separator } from "@/components/ui/separator";
+import { Heading } from "@/components/heading";
 
 export default async function SettingsPage() {
   const user = await AuthService.getSelf()
@@ -12,13 +11,8 @@ export default async function SettingsPage() {
   if (!user) return null
   return (
     <div>
-      <div className="flex flex-col gap-y-4">
-        <H3>Setting</H3>
-        <Description >
-          Manage your Wanderlust account settings.
-        </Description>
-      </div>
-      <Separator orientation="horizontal" className="my-4" />
+      <Heading title="Settings" description="Manage your account settings." />
+     
       <div className="flex flex-col gap-y-4 ">
         <SettingUserInfo initialImage={user.image} initialUsername={user.name} />
         <SettingSignIn initialSignInImage={settings?.signInCoverImage} />

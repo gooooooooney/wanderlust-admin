@@ -20,6 +20,10 @@ export const updateUser = async (values: Partial<User>) => {
     throw new Error("Username is require");
   }
 
+  if(validData.image === null) {
+    // utapi.deleteFiles(self.image);
+  }
+
 
   const user = await UserService.updateUser(self.id, validData)
 
