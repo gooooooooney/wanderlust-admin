@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
-import { CellWithHtmlProps } from "./types"
+import { CellWithHtmlProps } from "../types"
 
 export const EditableCell: React.FC<CellWithHtmlProps> = ({ getValue, row: { index }, column: { id }, table, className }) => {
   const initialValue = getValue() as string

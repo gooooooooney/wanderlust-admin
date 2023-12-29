@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Cell } from "./types";
+import { Cell } from "../types";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { Copy, TrashIcon } from "lucide-react";

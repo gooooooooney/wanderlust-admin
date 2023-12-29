@@ -31,7 +31,7 @@ import {
   TableCell,
   Table,
 } from "@/components/ui/table";
-import { columns } from "./columns";
+import { columns } from "./columns/columns";
 import { deleteBanners, updateBanner } from "@/actions/pageinfo";
 import { deleteFiles } from "@/actions/uploadthing";
 import { getUploadThingKeys } from "@/lib/uploadthing";

@@ -1,24 +1,14 @@
 "use client";
 
 import { addBanners } from "@/actions/pageinfo";
-import { updateSetting } from "@/actions/setting";
-import { deleteFiles } from "@/actions/uploadthing";
-import {
-  Card,
-  CardHeader,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { UploadDropzone, getUploadThingKeys } from "@/lib/uploadthing";
+import { UploadDropzone } from "@/lib/uploadthing";
 import { cn } from "@/lib/utils";
 import { Label } from "@radix-ui/react-label";
 import { useTransition, useState } from "react";
 import { toast } from "sonner";
 import { Banner } from "@prisma/client";
-import EmblaCarousel from "./carousel/embla-carousel";
 import { Description } from "@/components/typography/text";
 import { DataTableBanners } from "./datatable";
-import { DataTableDemo } from "./datatable/t";
 
 type SettingBannerProps = {
   initialBanners?: Banner[];
@@ -53,25 +43,6 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
     });
   };
 
-  const onRemove = () => {
-    startTransition(() => {
-      deleteFiles(getUploadThingKeys(banners)).then((res) => {
-        if (res.success) {
-          // updateSetting({ signInCoverImage: null })
-          //   .then(() => {
-          //     setBanners([])
-          //     toast.success("");
-          //   })
-          //   .catch(() => {
-          //     toast.error("Something went wrong")
-          //   });
-        } else {
-          toast.error("Delete failed");
-        }
-      });
-    });
-  };
-  console.log(banners)
   return (
     <div>
       <Label>Set your banners</Label>
@@ -95,9 +66,7 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
             />
           </div>
         </div>
-        <div className="">
-          {/* {banners.length > 0 && <EmblaCarousel banners={banners} />} */}
-          {/* {banners.length > 0 && <DataTableDemo banners={initialBanners || []} />} */}
+        <div>
           {banners.length > 0 && <DataTableBanners banners={initialBanners || []} />}
         </div>
       </div>

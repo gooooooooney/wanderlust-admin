@@ -42,23 +42,21 @@ export const columns: ColumnDef<Banner>[] = [
   {
     accessorKey: "order",
     header: "Order",
-    cell: ({ row, getValue }) => getValue(),
+    cell: ({ getValue }) => getValue(),
   },
   {
     accessorKey: "title",
     header: "Title (editable)",
-    size: 100,
-    cell: (props) => <EditableCell {...props} />,
+    cell: (props) => <EditableCell className="w-26" {...props} />,
   },
   {
     accessorKey: "description",
-    size: 200,
     header: "Description",
     cell: (props) => <EditableCell {...props} className="text-sm text-muted-foreground" />
   },
   {
     accessorKey: "imageUrl",
-    header: "imageUrl",
+    header: "thumbnail",
     cell: ImageCell,
   },
   {
