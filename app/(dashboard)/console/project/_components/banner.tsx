@@ -71,6 +71,7 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
       });
     });
   };
+  console.log(banners)
   return (
     <div>
       <Label>Set your banners</Label>
@@ -88,7 +89,7 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
                 "ut-button:bg-primary ut-button:text-primary-foreground ut-button:shadow ut-button:hover:bg-primary/90 ut-button:ut-readying:bg-primary-500/50",
               ])}
               onClientUploadComplete={(res) => {
-                console.log(res);
+               
                 onUpload(res.map((i) => i.url));
               }}
             />
@@ -101,36 +102,5 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
         </div>
       </div>
     </div>
-  );
-  return (
-    <Card>
-      <CardHeader>
-        <Label>Set your banners</Label>
-      </CardHeader>
-      <CardDescription className="px-6 mb-4">
-        This is your banners.
-      </CardDescription>
-      <CardContent className="flex flex-col gap-y-4">
-        <div className="max-w-md ">
-          <div className="rounded-xl  outline-dashed outline-muted">
-            <UploadDropzone
-              endpoint="bannerUploader"
-              className={cn([
-                "ut-label:text-primary",
-                "ut-allowed-content:text-primary ",
-                "ut-button:bg-primary ut-button:text-primary-foreground ut-button:shadow ut-button:hover:bg-primary/90 ut-button:ut-readying:bg-primary-500/50",
-              ])}
-              onClientUploadComplete={(res) => {
-                console.log(res);
-                onUpload(res.map((i) => i.url));
-              }}
-            />
-          </div>
-        </div>
-        <div className="max-w-6xl mx-auto">
-          {banners.length > 0 && <EmblaCarousel banners={banners} />}
-        </div>
-      </CardContent>
-    </Card>
   );
 };

@@ -1,6 +1,5 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Banner } from "@prisma/client";
 import {
   SortingState,
@@ -14,7 +13,7 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import { ChevronDownIcon, Copy } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -33,7 +32,11 @@ import {
   Table,
 } from "@/components/ui/table";
 import { columns } from "./columns";
-import { useIsClient } from "usehooks-ts";
+import { deleteBanners, updateBanner } from "@/actions/pageinfo";
+import { deleteFiles } from "@/actions/uploadthing";
+import { getUploadThingKeys } from "@/lib/uploadthing";
+import { toast } from "sonner";
+import { DelDialog } from "./del-dialog";
 
 
 
@@ -54,7 +57,6 @@ function useSkipper() {
 }
 
 export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
-  const isClient = useIsClient()
 
   const [data, setData] = React.useState<Banner[]>(banners);
 
@@ -62,6 +64,9 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
+  useEffect(() => {
+    setData(banners)
+  }, [banners])
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
@@ -80,10 +85,16 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
     onRowSelectionChange: setRowSelection,
     autoResetPageIndex,
     meta: {
-      updateData: (rowIndex, columnId, value) => {
-        console.log(data[rowIndex])
+      updateData: function updateData(rowIndex, columnId, value) {
+        const oldRow = data[rowIndex] as Banner
+        const key = columnId as keyof Banner
+        // Skip if value is the same
+        if (oldRow[key] === value) return
         // Skip page index reset until after next rerender
         skipAutoResetPageIndex()
+        updateBanner(oldRow.id, {
+          [key]: value,
+        })
         setData(old =>
           old.map((row, index) => {
             if (index === rowIndex) {
@@ -96,6 +107,20 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
           })
         )
       },
+      deleteData: function deleteDate(rowIndex) {
+        const oldRow = data[rowIndex] as Banner
+        // Skip page index reset until after next rerender
+        skipAutoResetPageIndex()
+        toast.promise(deleteBanners([oldRow.id]), {
+          loading: "Deleting banner...",
+          success: () => {
+            deleteFiles(getUploadThingKeys([oldRow.imageUrl]))
+            setData(old => old.filter((_, index) => index !== rowIndex))
+            return "Banner deleted"
+          },
+          error: "Failed to delete banner"
+        })
+      }
     },
     state: {
       sorting,
@@ -104,7 +129,6 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
       rowSelection,
     },
   });
-  if (!isClient) return null
 
   return (
     <div className="w-full">
@@ -117,6 +141,25 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
           }
           className="max-w-sm"
         /> */}
+        <DelDialog disabled={table.getSelectedRowModel().rows.length === 0} onConfirm={() => {
+          const rows = table.getSelectedRowModel().rows
+          const originalRows = rows.map(v => v.original) as Banner[]
+          // delete banners from db
+          toast.promise(deleteBanners(originalRows.map(v => v.id)), {
+            loading: "Deleting banner...",
+            success: () => {
+              // delete uploadthing files
+              deleteFiles(getUploadThingKeys(originalRows.map(v => v.imageUrl)))
+              const indexList = rows.map(v => v.index)
+              // update rows
+              setData(old => old.filter((_, index) => !indexList.includes(index)))
+              // update selected rows
+              table.toggleAllPageRowsSelected(false)
+              return "Banner deleted"
+            },
+            error: "Failed to delete banner"
+          })
+        }} />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -155,9 +198,9 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   );
                 })}

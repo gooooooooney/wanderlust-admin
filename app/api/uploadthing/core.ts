@@ -4,7 +4,6 @@ import { db } from "@/lib/db";
 import { UserService } from "@/services/user.service";
 import { AuthService } from "@/services/auth.service";
 import { SettingService } from "@/services/setting.service";
-import { PageInfoService } from "@/services/pageinfo.service";
 
 const f = createUploadthing();
 
