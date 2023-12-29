@@ -19,7 +19,7 @@ export const ImageCell: Cell = ({ row }) => (
       <DialogTrigger asChild>
         <Image
           className="aspect-square object-cover rounded-md cursor-pointer"
-          src={row.getValue("imageUrl")}
+          src={row.getValue("imageSrc")}
           alt={row.getValue("description")}
           width={50}
           height={50}
@@ -28,7 +28,7 @@ export const ImageCell: Cell = ({ row }) => (
       <DialogContent className="max-w-6xl bg-auto border-none h-[90vh]">
         <Image
           className=" object-cover rounded-md"
-          src={row.getValue("imageUrl")}
+          src={row.getValue("imageSrc")}
           alt={row.getValue("description")}
           fill
         />

@@ -137,7 +137,7 @@ export const SettingUserInfo = ({
                     </Button>
                   </Hint>
                 </div>
-                <UserAvatar username="" size="preview" imageUrl={image!} />
+                <UserAvatar username="" size="preview" imageSrc={image!} />
                 {/* <Image
                     alt="Image"
                     src={image}

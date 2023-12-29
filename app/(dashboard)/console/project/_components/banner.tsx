@@ -17,15 +17,14 @@ type SettingBannerProps = {
 export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
   const [isPending, startTransition] = useTransition();
   const [banners, setBanners] = useState<string[]>(
-    initialBanners?.map((v) => v.imageUrl) || []
+    initialBanners?.map((v) => v.imageSrc) || []
   );
 
   const onUpload = (res: string[]) => {
     startTransition(() => {
       addBanners(
         res.map((url, i) => ({
-          imageUrl: url,
-          title: "",
+          imageSrc: url,
           order: i,
         }))
       )
@@ -47,7 +46,8 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
     <div>
       <Label>Set your banners</Label>
       <Description className="my-2">
-        This is your banners. You can upload your banners here. You can upload up to 5 banners and each banner must be less than 5MB.
+        This is your banners. You can upload your banners here. You can upload
+        up to 5 banners and each banner must be less than 5MB.
       </Description>
       <div className="flex flex-col gap-y-4">
         <div className="max-w-md ">
@@ -60,14 +60,13 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
                 "ut-button:bg-primary ut-button:text-primary-foreground ut-button:shadow ut-button:hover:bg-primary/90 ut-button:ut-readying:bg-primary-500/50",
               ])}
               onClientUploadComplete={(res) => {
-               
                 onUpload(res.map((i) => i.url));
               }}
             />
           </div>
         </div>
         <div>
-          {banners.length > 0 && <DataTableBanners banners={initialBanners || []} />}
+          <DataTableBanners banners={initialBanners || []} />
         </div>
       </div>
     </div>

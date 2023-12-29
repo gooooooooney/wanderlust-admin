@@ -15,9 +15,9 @@ export const getPageInfoByUserId = async (userId: string) => {
 
 export type Banner = {
   order: number;
-  title: string;
   description?: string;
-  imageUrl: string;
+  imageUrl?: string;
+  imageSrc: string;
 }
 
 export const addBanners = async ( banners: Banner[]) => {

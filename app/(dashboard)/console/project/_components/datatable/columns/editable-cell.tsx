@@ -3,10 +3,11 @@ import { cn } from "@/lib/utils"
 import { useEffect, useState } from "react"
 import { CellWithHtmlProps } from "../types"
 
-export const EditableCell: React.FC<CellWithHtmlProps> = ({ getValue, row: { index }, column: { id }, table, className }) => {
+export const EditableCell: React.FC<CellWithHtmlProps & {handleBlur?: () => void}> = ({ getValue, row: { index }, column: { id }, table, className, handleBlur }) => {
   const initialValue = getValue() as string
   const [value, setValue] = useState(initialValue)
   const onBlur = () => {
+    handleBlur?.()
     table.options.meta?.updateData(index, id, value)
   }
 

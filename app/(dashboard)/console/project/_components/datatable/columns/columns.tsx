@@ -1,20 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+
 import { Banner } from "@prisma/client";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { EditableCell } from "./editable-cell";
 import { ImageCell } from "./image-cell";
 import { ActionsCell } from "./actions-cell";
+import Link from "next/link";
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import { ImageUrl } from "./image-url";
 
 export const columns: ColumnDef<Banner>[] = [
   {
@@ -45,23 +40,39 @@ export const columns: ColumnDef<Banner>[] = [
     cell: ({ getValue }) => getValue(),
   },
   {
-    accessorKey: "title",
-    header: "Title (editable)",
-    cell: (props) => <EditableCell className="w-26" {...props} />,
+    accessorKey: "imageUrl",
+    header: "Link",
+    cell: ImageUrl,
   },
   {
     accessorKey: "description",
     header: "Description",
-    cell: (props) => <EditableCell {...props} className="text-sm text-muted-foreground" />
+    cell: (props) => (
+      <EditableCell {...props} className="text-sm text-muted-foreground" />
+    ),
   },
   {
-    accessorKey: "imageUrl",
+    accessorKey: "imageSrc",
     header: "thumbnail",
     cell: ImageCell,
   },
   {
-    id: "actions",
-    enableHiding: false,
-    cell: ActionsCell
+    id: "delete",
+    header: "",
+    cell: ({ row, table }) => (
+      <Button
+        variant="destructive"
+        onClick={() => {
+          table.options.meta?.deleteData(row.index);
+        }}
+      >
+        Delete
+      </Button>
+    ),
   },
+  // {
+  //   id: "actions",
+  //   enableHiding: false,
+  //   cell: ActionsCell,
+  // },
 ];

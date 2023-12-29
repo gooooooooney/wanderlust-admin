@@ -70,11 +70,11 @@ model PageInfo {
 model Banner {
   id          String   @id @default(uuid())
   pageInfo    PageInfo @relation(fields: [pageInfoId], references: [id])
-  pageInfoId  String  
+  pageInfoId  String
   order       Int
-  title       String
+  imageUrl    String   @default("")
   description String   @default("")
-  imageUrl    String
+  imageSrc    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

@@ -18,7 +18,7 @@ export const UserButton = async ({ props }: any) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <UserAvatar username={user.name!} size="md" imageUrl={user.image!} />
+        <UserAvatar username={user.name!} size="md" imageSrc={user.image!} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-60">

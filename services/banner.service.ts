@@ -4,7 +4,7 @@ import { Banner } from "@prisma/client";
 
 export class BannerService {
 
-  static async updateBanner(bannerId: string, banner: Partial<Pick<Banner, "order" | "title" | "description" | "imageUrl">>) {
+  static async updateBanner(bannerId: string, banner: Partial<Pick<Banner, "order" | "imageSrc" | "description" | "imageUrl">>) {
     try {
       const result = await db.banner.update({
         where: {

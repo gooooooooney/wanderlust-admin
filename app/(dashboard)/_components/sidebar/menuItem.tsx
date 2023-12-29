@@ -43,7 +43,7 @@ export const MenuItem = ({ item, pathname }: { pathname: string, item: Navigatio
               <item.icon
                 className={cn(
                   'h-6 w-6 shrink-0 !rotate-0',
-                  item.color
+                  // item.color
                 )}
                 aria-hidden="true"
               />
@@ -84,7 +84,7 @@ export const MenuItem = ({ item, pathname }: { pathname: string, item: Navigatio
               <item.icon
                 className={cn(
                   'h-6 w-6 shrink-0 !rotate-0',
-                  item.color
+                  // item.color
                 )}
                 aria-hidden="true"
               />
