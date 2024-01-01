@@ -2,6 +2,8 @@ import NextAuth from "next-auth"
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import { db } from "./lib/db"
 import authConfig from './next-auth.config'
+import { UserService } from "./services/user.service"
+import { TwoFactorConfirmation } from "./services/twoFactorConfirmation.service"
 // import {generateUsername} from "unique-username-generator"
 
 
@@ -18,10 +20,27 @@ export const {
   session: { strategy: "jwt" },
 
   callbacks: {
-    async signIn({credentials}) {
-     
+    async signIn({ user, account }) {
+      // Allow OAuth without email verification
+      if (account?.provider !== "credentials") return true;
 
-      return true
+      const existingUser = await UserService.getUserById(user.id);
+
+      // Prevent sign in without email verification
+      if (!existingUser?.emailVerified) return false;
+
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await TwoFactorConfirmation.getTwoFactorConfirmationByUserId(existingUser.id);
+
+        if (!twoFactorConfirmation) return false;
+
+        // Delete two factor confirmation for next sign in
+        await db.twoFactorConfirmation.delete({
+          where: { id: twoFactorConfirmation.id }
+        });
+      }
+
+      return true;
     },
     async session({token, session})  {
       if (token.sub) {

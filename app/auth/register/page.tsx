@@ -1,6 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { FcGoogle } from "react-icons/fc";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { SignUpForm } from "./_components/signin-form";
 
@@ -23,29 +20,6 @@ const SignUpPage: React.FC = () => {
             <div>
               <SignUpForm />
             </div>
-            {/* <div className="mt-10">
-              <div className="relative">
-                <div
-                  className="absolute inset-0 flex items-center"
-                  aria-hidden="true"
-                >
-                  <div className="w-full border-t border-gray-200" />
-                </div>
-                <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="bg-white px-6 text-gray-900">
-                    Or continue with
-                  </span>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <Button className="w-full">
-                  <FcGoogle className={cn("h-4 w-4 mr-2", {})} />
-                  Sign in with Google
-                </Button>
-              </div>
-              
-            </div> */}
           </div>
         </div>
       </div>

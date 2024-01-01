@@ -14,53 +14,39 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { useTransition } from "react";
-import {  SignUp } from "@/actions/auth";
+import { useState, useTransition } from "react";
+import { SignUp, register } from "@/actions/auth";
 import { toast } from "sonner";
 import { Btn } from "@/components/btn";
 import { useRouter } from "next/navigation";
-
-const formSchema = z.object({
-  username: z.string().min(4, {
-    message: "Please enter a valid username.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  password: z.string().min(8, {
-    message: "Please enter a password with at least 8 characters.",
-  }),
-});
+import { RegisterSchema } from "@/schemas";
+import { FormError } from "@/components/auth/form-error";
+import { FormSuccess } from "@/components/auth/form-success";
 
 export function SignUpForm() {
   const [isPending, startTransition] = useTransition();
 
-  const router = useRouter();
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
     defaultValues: {
-      username: "",
+      name: "",
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof RegisterSchema>) {
+    setError("");
+    setSuccess("");
+
     startTransition(() => {
-      SignUp({
-        username: values.username,
-        email: values.email,
-        password: values.password,
-      })
-        .then((res) => {
-          toast.success("Successfully signed up.");
-          router.push("/sign-in")
-        })
-        .catch((e) => {
-          console.log(e)
-          toast.error("Failed to sign up.");
-        });
+      register(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
     });
   }
   return (
@@ -71,7 +57,7 @@ export function SignUpForm() {
       >
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
@@ -127,7 +113,12 @@ export function SignUpForm() {
             </FormItem>
           )}
         />
-        <Btn disabled={isPending} className="mt-4" type="submit">Sign up</Btn>
+
+        <FormError message={error} />
+        <FormSuccess message={success} />
+        <Btn disabled={isPending} className="mt-4" type="submit">
+          Sign up
+        </Btn>
       </form>
     </Form>
   );
