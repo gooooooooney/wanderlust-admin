@@ -12,4 +12,20 @@ export class TwoFactorConfirmation {
       return null;
     }
   }
+  static async deleteTwoFactorConfirmation(id: string) {
+    await db.twoFactorConfirmation.delete({
+      where: {
+        id,
+      },
+    });
+  }
+    static async createTwoFactorConfirmation(
+        userId: string,
+    ) {
+        return await db.twoFactorConfirmation.create({
+            data: {
+              userId,
+            }
+          });
+    }
 }

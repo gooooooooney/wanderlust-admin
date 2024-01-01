@@ -15,13 +15,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useState, useTransition } from "react";
-import { login } from "@/actions/auth";
-import { toast } from "sonner";
 import { Btn } from "@/components/btn";
 import { useSearchParams } from "next/navigation";
 import { FormError } from "../../../../components/auth/form-error";
 import { FormSuccess } from "../../../../components/auth/form-success";
 import { LoginSchema } from "@/schemas";
+import { login } from "@/actions/auth/login";
+import Link from "next/link";
 
 export function SignInForm() {
   const [isPending, startTransition] = useTransition();
@@ -132,6 +132,14 @@ export function SignInForm() {
                       />
                     </FormControl>
                     {/* <FormDescription>This is your password.</FormDescription> */}
+                    <Button
+                      size="sm"
+                      variant="link"
+                      asChild
+                      className="px-0 font-normal"
+                    >
+                      <Link href="/auth/reset">Forgot password?</Link>
+                    </Button>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -142,7 +150,9 @@ export function SignInForm() {
         <FormError message={error || urlError} />
         <FormSuccess message={success} />
         <Btn className="mt-4" disabled={isPending} type="submit">
-          Sign in
+          {
+            showTwoFactor ? "Confirm" : "Sign In"
+          }
         </Btn>
       </form>
     </Form>

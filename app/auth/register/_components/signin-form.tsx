@@ -15,13 +15,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useState, useTransition } from "react";
-import { SignUp, register } from "@/actions/auth";
 import { toast } from "sonner";
 import { Btn } from "@/components/btn";
 import { useRouter } from "next/navigation";
 import { RegisterSchema } from "@/schemas";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
+import { register } from "@/actions/auth/register";
 
 export function SignUpForm() {
   const [isPending, startTransition] = useTransition();
@@ -117,7 +117,7 @@ export function SignUpForm() {
         <FormError message={error} />
         <FormSuccess message={success} />
         <Btn disabled={isPending} className="mt-4" type="submit">
-          Sign up
+          Create an account
         </Btn>
       </form>
     </Form>

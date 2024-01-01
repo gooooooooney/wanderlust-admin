@@ -95,7 +95,7 @@ model TwoFactorConfirmation {
 
 model PageInfo {
   id        String   @id @default(uuid())
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String   @unique
   banner    Banner[]
   theme     Theme    @default(LIGHT)
@@ -105,7 +105,7 @@ model PageInfo {
 
 model Banner {
   id          String   @id @default(uuid())
-  pageInfo    PageInfo @relation(fields: [pageInfoId], references: [id])
+  pageInfo    PageInfo @relation(fields: [pageInfoId], references: [id], onDelete: Cascade)
   pageInfoId  String
   order       Int
   imageUrl    String   @default("")

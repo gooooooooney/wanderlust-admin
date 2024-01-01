@@ -1,10 +1,14 @@
-import Image from "next/image";
-import { SignUpForm } from "./_components/signin-form";
-import { Text } from "@/components/typography/text";
 import { Button } from "@/components/ui/button";
+
+import { Description, Text } from "@/components/typography/text";
+
+import Image from "next/image";
+import { SettingService } from "@/services/setting.service";
+import { RestForm } from "./_components/resetForm";
 import Link from "next/link";
 
-const SignUpPage: React.FC = () => {
+const SignInPage: React.FC = async () => {
+  const setting = await SettingService.getSetting();
   return (
     <div className="flex min-h-full flex-1">
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
@@ -15,17 +19,18 @@ const SignUpPage: React.FC = () => {
               src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
               alt="Your Company"
             />
-            <h2 className="mt-8 text-2xl  font-bold leading-9 tracking-tight">
-              Create an account
+            <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight ">
+              Reset
             </h2>
+            <Description>Forget your password?</Description>
           </div>
           <div className="mt-10">
             <div>
-              <SignUpForm />
+              <RestForm />
             </div>
-            <Text className="text-center mt-4" >
-              <Button variant="link" size="sm">
-                <Link href="/auth/login">Already have an account?</Link>
+            <Text className="text-center text-sm mt-4">
+              <Button variant="link">
+                <Link href="/auth/login">Back to login</Link>
               </Button>
             </Text>
           </div>
@@ -35,22 +40,12 @@ const SignUpPage: React.FC = () => {
         <Image
           fill
           className="absolute inset-0 h-full w-full object-cover object-top"
-          src="/img/seaside.jpeg"
+          src={setting?.signInCoverImage || "/img/seaside.jpeg"}
           alt=""
         />
       </div>
-      {/* <div className="flex flex-col gap-y-4 bg-background p-4 rounded-md shadow-md">
-        <h1 className="text-2xl text-center font-semibold my-2">Sign in</h1>
-        <SignInForm />
-        <Divider text="or" />
-
-        <Button>
-          <FcGoogle className={cn("h-4 w-4 mr-2", {})} />
-          Sign in with Google
-        </Button>
-      </div> */}
     </div>
   );
 };
 
-export default SignUpPage;
+export default SignInPage;

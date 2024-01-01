@@ -9,16 +9,16 @@ import { UserService } from "./services/user.service"
 
 export default {
   providers: [
-    // Google({
-    //   clientId: process.env.GOOGLE_CLIENT_ID!,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
 
-    // }),
-    // GitHubProvider({
-    //   clientId: process.env.GITHUB_ID,
-    //   clientSecret: process.env.GITHUB_SECRET,
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_ID,
+      clientSecret: process.env.GITHUB_SECRET,
 
-    // })
+    }),
     CredentialsProvider({
       async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);

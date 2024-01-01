@@ -1,11 +1,10 @@
+import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { auth } from "@/next-auth";
 
 
 export class AuthService {
   static async getSelf() {
-    const session = await auth();
-    const self = session?.user;
+    const self = await currentUser();
 
     if (!self || !self.email) {
       throw new Error("Unauthorized");
@@ -23,7 +22,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new Error("Not found");
+      throw new Error("Unauthorized");
     }
     return user;
   }

@@ -4,6 +4,8 @@ import { db } from "./lib/db"
 import authConfig from './next-auth.config'
 import { UserService } from "./services/user.service"
 import { TwoFactorConfirmation } from "./services/twoFactorConfirmation.service"
+import { UserRole } from "@prisma/client"
+import { AccountService } from "./services/account.service"
 // import {generateUsername} from "unique-username-generator"
 
 
@@ -35,58 +37,51 @@ export const {
         if (!twoFactorConfirmation) return false;
 
         // Delete two factor confirmation for next sign in
-        await db.twoFactorConfirmation.delete({
-          where: { id: twoFactorConfirmation.id }
-        });
+        await TwoFactorConfirmation.deleteTwoFactorConfirmation(twoFactorConfirmation.id);
       }
 
       return true;
     },
-    async session({token, session})  {
-      if (token.sub) {
-        session.user.id = token.sub
+    async session({ token, session }) {
+      if (token.sub && session.user) {
+        session.user.id = token.sub;
       }
 
-      if (token.username) {
-        session.user.email = token.username as string
+      if (token.role && session.user) {
+        session.user.role = token.role as UserRole;
       }
-      return session
+
+      if (session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+      }
+
+      if (session.user) {
+        session.user.name = token.name;
+        session.user.email = token.email;
+        session.user.isOAuth = token.isOAuth as boolean;
+      }
+
+      return session;
     },
     async jwt({token} ) {
-      const id = token.sub
-      if (!id) return token
+      if (!token.sub) return token;
 
-      const dbUser = await db.user.findUnique({
-        where: {id},
-        select: {
-          email: true
-        }
-      })
-      if (!dbUser) return token
-      
-      return {
-        ...token,
-        email: dbUser.email
-      }
-    }
-  },
-  events: {
-    createUser: async ({user}) => {
-      const email = user.email || ""
-      // const username = generateUsername(user.name)
+      const existingUser = await UserService.getUserById(token.sub);
 
-      // await db.user.update({
-      //   where: {email},
-      //   data: {
-      //     username,
-      //     stream: {
-      //       create: {
-      //         name: `${username}'s stream`
-      //       }
-      //     }
-      //   }
-      // })
-      
+      if (!existingUser) return token;
+
+      const existingAccount = await AccountService.getAccountByUserId(
+        existingUser.id
+      );
+
+      token.isOAuth = !!existingAccount;
+      token.name = existingUser.name;
+      token.email = existingUser.email;
+      token.role = existingUser.role;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
+
+      return token;
+    
     }
   },
   ...authConfig,

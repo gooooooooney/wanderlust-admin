@@ -10,9 +10,11 @@ import { AuthService } from "@/services/auth.service";
 export const updateUser = async (values: Partial<User>) => {
   const self = await AuthService.getSelf();
 
+  
   const validData = {
     name: values.name,
     image: values.image,
+    isTwoFactorEnabled: values.isTwoFactorEnabled,
   };
 
 
@@ -20,14 +22,12 @@ export const updateUser = async (values: Partial<User>) => {
     throw new Error("Username is require");
   }
 
-  if(validData.image === null) {
-    // utapi.deleteFiles(self.image);
-  }
-
 
   const user = await UserService.updateUser(self.id, validData)
+  console.log({user})
 
   revalidatePath("/");
 
   return user;
 };
+

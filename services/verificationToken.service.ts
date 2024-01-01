@@ -31,6 +31,7 @@ export class VerificationTokenService {
       },
     });
   }
+
   static async createVerificationToken(
     email: string,
     token: string,
