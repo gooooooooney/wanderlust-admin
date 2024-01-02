@@ -1,17 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { Banner } from "@prisma/client";
+import { Banner, VirtualTour } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
-import { EditableCell } from "../../editable-cell";
-import { ImageCell } from "./image-cell";
+import { EditableCell } from "./editable-cell";
 import { ActionsCell } from "./actions-cell";
 import Link from "next/link";
 import { ExternalLinkIcon } from "@radix-ui/react-icons";
-import { ImageUrl } from "./image-url";
+import { LinkPreview } from "./link-preview";
+import { ImageCell } from "./image-cell";
 
-export const columns: ColumnDef<Banner>[] = [
+export const columns: ColumnDef<VirtualTour>[] = [
   {
     id: "select",
     header: ({ table }) => (
@@ -38,13 +38,26 @@ export const columns: ColumnDef<Banner>[] = [
     accessorKey: "order",
     header: "Order",
     cell: (props) => (
-      <EditableCell {...props} type="number" className="text-sm text-muted-foreground" />
+      <EditableCell type="number" {...props} className="text-sm text-muted-foreground" />
+    ),  },
+  {
+    accessorKey: "link",
+    header: "Link",
+    cell: LinkPreview,
+  },
+  {
+    accessorKey: "title",
+    header: "Title",
+    cell: (props) => (
+      <EditableCell {...props} className="text-sm text-muted-foreground" />
     ),
   },
   {
-    accessorKey: "imageUrl",
-    header: "Link",
-    cell: ImageUrl,
+    accessorKey: "author",
+    header: "Author",
+    cell: (props) => (
+      <EditableCell {...props} className="text-sm text-muted-foreground" />
+    ),
   },
   {
     accessorKey: "description",
@@ -54,27 +67,13 @@ export const columns: ColumnDef<Banner>[] = [
     ),
   },
   {
-    accessorKey: "imageSrc",
-    header: "thumbnail",
+    accessorKey: "coverSrc",
+    header: "Cover",
     cell: ImageCell,
   },
   {
-    id: "delete",
-    header: "",
-    cell: ({ row, table }) => (
-      <Button
-        variant="destructive"
-        onClick={() => {
-          table.options.meta?.deleteData(row.index);
-        }}
-      >
-        Delete
-      </Button>
-    ),
+    id: "actions",
+    enableHiding: false,
+    cell: ActionsCell,
   },
-  // {
-  //   id: "actions",
-  //   enableHiding: false,
-  //   cell: ActionsCell,
-  // },
 ];

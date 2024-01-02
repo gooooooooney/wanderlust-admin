@@ -2,11 +2,34 @@
 const nextConfig = {
     reactStrictMode: false,
     images: {
-        domains: [
-            'images.unsplash.com',
-            "utfs.io",
-            "pic.superbed.cc",
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',
+                port: "",
+            },
+            {
+                protocol: 'https',
+                hostname: 'utfs.io',
+                port: "",
+            },
+            {
+                protocol: 'https',
+                hostname: 'pic.superbed.cc',
+                port: "",
+            },
+            {
+                protocol: 'https',
+                hostname: 'pic.imgdb.cn',
+                port: "",
+            },
         ],
+        // domains: [
+        //     'images.unsplash.com',
+        //     "utfs.io",
+        //     "pic.superbed.cc",
+        //     "pic.imgdb.cn",
+        // ],
     },
 }
 

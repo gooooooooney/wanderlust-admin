@@ -36,3 +36,14 @@ export const LoginSchema = z.object({
       message: "Email is required",
     }),
   });
+
+  export const AddVirtualTourSchema = z.object({
+    title: z.string(),
+    description: z.string(),
+    link: z.string().url({
+      message: "Please enter a valid url.",
+    }),
+    order: z.string().default("0"),
+    author: z.string(),
+    coverSrc: z.string(),
+  })

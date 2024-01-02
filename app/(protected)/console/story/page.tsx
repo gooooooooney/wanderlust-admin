@@ -1,7 +1,14 @@
-const StoryPage = () => {
+import { AuthService } from "@/services/auth.service";
+import { DataTableVt } from "./_components/datatable";
+import { AddData } from "./_components/addData";
+
+const StoryPage = async () => {
+  const self = await AuthService.getSelf()
+
   return (
-    <div>
-      <h1>Story Page</h1>
+    <div className="flex flex-col items-end gap-y-4">
+      <AddData />
+      <DataTableVt vts={self.virtualTours || []} />
     </div>
   );
 };

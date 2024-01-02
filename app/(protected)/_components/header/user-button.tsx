@@ -24,7 +24,7 @@ export const UserButton = async ({ props }: any) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-60">
-        <DropdownMenuLabel>{user.name}</DropdownMenuLabel>
+        <DropdownMenuLabel>{user.name}: {user.role}</DropdownMenuLabel>
         {/* <SettingModal initialImage={user.image} initialUsername={user.name} /> */}
         {/* <SheetDemo /> */}
         <DropdownMenuSeparator />

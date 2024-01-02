@@ -2,9 +2,10 @@
 import { updateSetting } from "@/actions/setting";
 import { deleteFiles } from "@/actions/uploadthing";
 import { updateUser } from "@/actions/user";
+import { Btn } from "@/components/btn";
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UploadDropzone, getUploadThingKeys } from "@/lib/uploadthing";
@@ -52,12 +53,12 @@ export const SettingSignIn = ({
   return (
     <Card >
       <CardHeader>
-        <Label>Sign In Cover Image</Label>
+        <Label>Upload In Cover Image</Label>
       </CardHeader>
       <CardDescription className="px-6 mb-4">
         This is your avatar.
       </CardDescription>
-      <CardContent>
+      <CardContent >
         <div className="max-w-md ">
           {image ? (
             <div className="relative aspect-video rounded-xl overflow-hidden ">
@@ -108,6 +109,34 @@ export const SettingSignIn = ({
 
           )}
         </div>
+        <div className="mt-4">
+          <Label>Or Set image src</Label>
+          <Input
+            className="mt-2"
+            placeholder="https://example.com/image.png"
+            value={image}
+            onChange={(e) => {
+              setImage(e.target.value);
+            }}
+          />
+        </div>
+        <Btn
+        disabled={isPending}
+        className="mt-4"
+          onClick={() => {
+            startTransition(() => {
+              updateSetting({ signInCoverImage: image })
+                .then(() => {
+                  toast.success("Sign-in image updated");
+                })
+                .catch(() => {
+                  toast.error("Something went wrong")
+                });
+            })
+          }}
+        >
+          Save
+        </Btn>
       </CardContent>
     </Card>
   )

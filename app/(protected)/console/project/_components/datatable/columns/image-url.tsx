@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { EditIcon, ExternalLinkIcon } from "lucide-react";
 import { Cell } from "../types";
 import Link from "next/link";
-import { EditableCell } from "./editable-cell";
+import { EditableCell } from "../../editable-cell";
 import { useState } from "react";
 
 export const ImageUrl: Cell = (props) => {

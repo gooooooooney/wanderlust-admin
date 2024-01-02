@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { FcGoogle } from "react-icons/fc";
-import { cn } from "@/lib/utils";
-import Image from "next/image";
+import NextImage from 'next/image'
+
 import { SignInForm } from "./_components/signin-form";
 import { SettingService } from "@/services/setting.service";
 import { Text } from "@/components/typography/text";
@@ -101,10 +100,10 @@ const SignInPage: React.FC = async () => {
         </div>
       </div>
       <div className="relative hidden w-0 flex-1 lg:block">
-        <Image
+        <NextImage
           fill
-          className="absolute inset-0 h-full w-full object-cover object-top"
-          src={setting?.signInCoverImage || "/img/seaside.jpeg"}
+          className="absolute inset-0 h-full w-full object-cover object-top animate-vertical-move"
+          src={setting?.signInCoverImage || "https://pic.imgdb.cn/item/6593a1f0c458853aef2954ea.jpg"}
           alt=""
         />
       </div>

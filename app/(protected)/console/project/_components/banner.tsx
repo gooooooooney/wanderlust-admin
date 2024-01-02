@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import { Banner } from "@prisma/client";
 import { Description } from "@/components/typography/text";
 import { DataTableBanners } from "./datatable";
+import { Input } from "@/components/ui/input";
+import { Btn } from "@/components/btn";
 
 type SettingBannerProps = {
   initialBanners?: Banner[];
@@ -16,9 +18,7 @@ type SettingBannerProps = {
 
 export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
   const [isPending, startTransition] = useTransition();
-  const [banners, setBanners] = useState<string[]>(
-    initialBanners?.map((v) => v.imageSrc) || []
-  );
+  const [banner, setBanner] = useState("");
 
   const onUpload = (res: string[]) => {
     startTransition(() => {
@@ -30,7 +30,6 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
       )
         .then((r) => {
           if (r) {
-            setBanners(res);
             toast.success("Upload success");
           } else {
             toast.error("Upload failed");
@@ -65,6 +64,28 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
             />
           </div>
         </div>
+        <div className="mt-4">
+          <Label>Or Set Banner by URL</Label>
+          <Input
+            className="mt-2"
+            placeholder="https://example.com/image.png"
+            value={banner}
+            onChange={(e) => {
+              setBanner(e.target.value);
+            }}
+          />
+          <Btn
+            disabled={isPending}
+            className="mt-4"
+            onClick={() => {
+              onUpload([banner]);
+              setBanner("");
+            }}
+          >
+            Save
+          </Btn>
+        </div>
+
         <div>
           <DataTableBanners banners={initialBanners || []} />
         </div>

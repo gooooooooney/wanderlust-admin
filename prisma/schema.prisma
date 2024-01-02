@@ -42,6 +42,7 @@ model User {
   emailVerified         DateTime?
   image                 String?
   accounts              Account[]
+  virtualTours          VirtualTour[]
   pageInfo              PageInfo?
   role                  UserRole               @default(USER)
   isTwoFactorEnabled    Boolean                @default(false)
@@ -91,6 +92,20 @@ model TwoFactorConfirmation {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model VirtualTour {
+  id          String   @id @default(uuid())
+  User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  coverSrc    String?
+  userId      String   @unique
+  title       String?
+  description String?
+  link        String?
+  author      String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model PageInfo {
