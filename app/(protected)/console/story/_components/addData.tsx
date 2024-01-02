@@ -23,10 +23,14 @@ import { Switch } from '@radix-ui/react-switch'
 import { addNewVirtualTour } from '@/actions/virtual-tour'
 import { toast } from 'sonner'
 import { useToggle } from 'usehooks-ts'
+import { TagPopover } from './tag-popover'
+import { Tag } from '@prisma/client'
 
+type AddDataProps = {
+  tags: Tag[]
+}
 
-
-export function AddData() {
+export function AddData({tags}: AddDataProps) {
   const [isPending, startTransition] = useTransition();
   const [open, toggle, setOpen] = useToggle()
   const form = useForm<z.infer<typeof AddVirtualTourSchema>>({
@@ -38,6 +42,7 @@ export function AddData() {
       link: "",
       coverSrc: "",
       order: "0",
+      tags: [],
     },
   });
   function onSubmit(values: z.infer<typeof AddVirtualTourSchema>) {
@@ -103,6 +108,21 @@ export function AddData() {
             />
             <FormField
               control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Tag</FormLabel>
+                  <FormControl>
+                    <TagPopover tags={tags} {...field} >
+                      open
+                    </TagPopover>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
               name="order"
               render={({ field }) => (
                 <FormItem>
@@ -121,6 +141,7 @@ export function AddData() {
                 <FormItem>
                   <FormLabel>Link</FormLabel>
                   <FormControl>
+                    
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
                   <FormMessage />

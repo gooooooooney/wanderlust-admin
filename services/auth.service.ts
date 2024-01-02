@@ -19,6 +19,7 @@ export class AuthService {
           }
         },
         virtualTours: true,
+        tags: true,
       }
     });
 

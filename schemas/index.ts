@@ -43,6 +43,7 @@ export const LoginSchema = z.object({
     link: z.string().url({
       message: "Please enter a valid url.",
     }),
+    tags: z.array(z.string()),
     order: z.string().default("0"),
     author: z.string(),
     coverSrc: z.string(),

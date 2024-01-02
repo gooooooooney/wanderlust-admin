@@ -23,6 +23,11 @@ const nextConfig = {
                 hostname: 'pic.imgdb.cn',
                 port: "",
             },
+            {
+                protocol: 'https',
+                hostname: 'global-public.realsee-cdn.com',
+                port: ""
+            }
         ],
         // domains: [
         //     'images.unsplash.com',
