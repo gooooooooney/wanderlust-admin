@@ -78,6 +78,10 @@ export const SettingBanner = ({ initialBanners }: SettingBannerProps) => {
             disabled={isPending}
             className="mt-4"
             onClick={() => {
+              if (!banner) {
+                toast.warning("Please input banner url");
+                return;
+              }
               onUpload([banner]);
               setBanner("");
             }}

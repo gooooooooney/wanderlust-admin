@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Button } from "@/components/ui/button";
 import { Banner } from "@prisma/client";
 import {
@@ -38,26 +38,23 @@ import { getUploadThingKeys } from "@/lib/uploadthing";
 import { toast } from "sonner";
 import { DelDialog } from "./del-dialog";
 
-
-
 function useSkipper() {
-  const shouldSkipRef = React.useRef(true)
-  const shouldSkip = shouldSkipRef.current
+  const shouldSkipRef = React.useRef(true);
+  const shouldSkip = shouldSkipRef.current;
 
   // Wrap a function with this to skip a pagination reset temporarily
   const skip = React.useCallback(() => {
-    shouldSkipRef.current = false
-  }, [])
+    shouldSkipRef.current = false;
+  }, []);
 
   React.useEffect(() => {
-    shouldSkipRef.current = true
-  })
+    shouldSkipRef.current = true;
+  });
 
-  return [shouldSkip, skip] as const
+  return [shouldSkip, skip] as const;
 }
 
 export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
-
   const [data, setData] = React.useState<Banner[]>(banners);
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -65,12 +62,12 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
     []
   );
   useEffect(() => {
-    setData(banners)
-  }, [banners])
+    setData(banners);
+  }, [banners]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
-  const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper()
+  const [autoResetPageIndex, skipAutoResetPageIndex] = useSkipper();
 
   const table = useReactTable({
     data,
@@ -86,41 +83,43 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
     autoResetPageIndex,
     meta: {
       updateData: function updateData(rowIndex, columnId, value) {
-        const oldRow = data[rowIndex] as Banner
-        const key = columnId as keyof Banner
+        const oldRow = data[rowIndex] as Banner;
+        const key = columnId as keyof Banner;
         // Skip if value is the same
-        if (oldRow[key] === value) return
+        if (oldRow[key] === value) return;
         // Skip page index reset until after next rerender
-        skipAutoResetPageIndex()
+        skipAutoResetPageIndex();
         updateBanner(oldRow.id, {
           [key]: value,
-        })
-        setData(old =>
+        });
+        setData((old) =>
           old.map((row, index) => {
             if (index === rowIndex) {
               return {
                 ...old[rowIndex]!,
                 [columnId]: value,
-              }
+              };
             }
-            return row
+            return row;
           })
-        )
+        );
       },
       deleteData: function deleteDate(rowIndex) {
-        const oldRow = data[rowIndex] as Banner
+        const oldRow = data[rowIndex] as Banner;
         // Skip page index reset until after next rerender
-        skipAutoResetPageIndex()
+        skipAutoResetPageIndex();
         toast.promise(deleteBanners([oldRow.id]), {
           loading: "Deleting banner...",
           success: () => {
-            deleteFiles(getUploadThingKeys([oldRow.imageSrc]))
-            setData(old => old.filter((_, index) => index !== rowIndex))
-            return "Banner deleted"
+            if (oldRow.imageSrc.includes("utfs.io")) {
+              deleteFiles(getUploadThingKeys([oldRow.imageSrc]));
+            }
+            setData((old) => old.filter((_, index) => index !== rowIndex));
+            return "Banner deleted";
           },
-          error: "Failed to delete banner"
-        })
-      }
+          error: "Failed to delete banner",
+        });
+      },
     },
     state: {
       sorting,
@@ -141,25 +140,33 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
           }
           className="max-w-sm"
         /> */}
-        <DelDialog disabled={table.getSelectedRowModel().rows.length === 0} onConfirm={() => {
-          const rows = table.getSelectedRowModel().rows
-          const originalRows = rows.map(v => v.original) as Banner[]
-          // delete banners from db
-          toast.promise(deleteBanners(originalRows.map(v => v.id)), {
-            loading: "Deleting banner...",
-            success: () => {
-              // delete uploadthing files
-              deleteFiles(getUploadThingKeys(originalRows.map(v => v.imageSrc)))
-              const indexList = rows.map(v => v.index)
-              // update rows
-              setData(old => old.filter((_, index) => !indexList.includes(index)))
-              // update selected rows
-              table.toggleAllPageRowsSelected(false)
-              return "Banner deleted"
-            },
-            error: "Failed to delete banner"
-          })
-        }} />
+        <DelDialog
+          disabled={table.getSelectedRowModel().rows.length === 0}
+          onConfirm={() => {
+            const rows = table.getSelectedRowModel().rows;
+            const originalRows = rows.map((v) => v.original) as Banner[];
+            // delete banners from db
+            toast.promise(deleteBanners(originalRows.map((v) => v.id)), {
+              loading: "Deleting banner...",
+              success: () => {
+                const utfsKeys = originalRows.filter((v) => v.imageSrc.includes("utfs.io")).map((v) => v.imageSrc);
+                // delete uploadthing files
+                if (utfsKeys.length > 0) {
+                  deleteFiles(getUploadThingKeys(utfsKeys));
+                }
+                const indexList = rows.map((v) => v.index);
+                // update rows
+                setData((old) =>
+                  old.filter((_, index) => !indexList.includes(index))
+                );
+                // update selected rows
+                table.toggleAllPageRowsSelected(false);
+                return "Banner deleted";
+              },
+              error: "Failed to delete banner",
+            });
+          }}
+        />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
@@ -198,9 +205,9 @@ export const DataTableBanners = ({ banners }: { banners: Banner[] }) => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                     </TableHead>
                   );
                 })}
@@ -348,4 +355,4 @@ Copy;
 - 数据分析代码与结果
 
 通过以上结构，本论文将全面分析人工智能在新闻传播中的应用，并对其带来的变革进行深入探讨。
-`
+`;

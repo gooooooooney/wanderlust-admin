@@ -7,5 +7,9 @@ const utapi = new UTApi();
 
 export const deleteFiles = async (keys: string[]) => {
 
-  return await utapi.deleteFiles(keys);
+  try {
+    await utapi.deleteFiles(keys);
+  } catch (error) {
+    // if the image is not a loadthing's image, do nothing
+  }
 }

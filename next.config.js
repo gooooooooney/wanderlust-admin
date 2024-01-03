@@ -27,6 +27,11 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'global-public.realsee-cdn.com',
                 port: ""
+            },
+            {
+                protocol: 'https',
+                hostname: 'realsee.jp',
+                port: ""
             }
         ],
         // domains: [
