@@ -3,6 +3,7 @@ import { SignUpForm } from "./_components/signin-form";
 import { Text } from "@/components/typography/text";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 const SignUpPage: React.FC = () => {
   return (
@@ -10,11 +11,7 @@ const SignUpPage: React.FC = () => {
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96 ">
           <div>
-            <img
-              className="h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
-            />
+          <Logo size="lg" />
             <h2 className="mt-8 text-2xl  font-bold leading-9 tracking-tight">
               Create an account
             </h2>

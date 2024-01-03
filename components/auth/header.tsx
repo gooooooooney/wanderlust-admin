@@ -1,6 +1,7 @@
 import { Poppins } from "next/font/google";
 
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/logo";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -16,12 +17,7 @@ export const Header = ({ label }: HeaderProps) => {
     <div className="w-full flex flex-col gap-y-4 items-center justify-center">
       <h1 className={cn("text-3xl font-semibold", font.className)}>
         <div className="flex items-center gap-x-4">
-          <img
-            className="h-10 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt="Your Company"
-          />
-          Wanderlust
+          <Logo size="lg" />
         </div>
       </h1>
       <p className="text-muted-foreground text-sm">{label}</p>

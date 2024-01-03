@@ -35,7 +35,7 @@ export const MenuItem = ({ item, pathname }: { pathname: string, item: Navigatio
 
         <AccordionItem className="border-none" value={item.name}>
 
-          <AccordionTrigger showChevron={!collapsed} className={cn(
+          <AccordionTrigger showChevron={matches || !collapsed} className={cn(
             item.href == pathname && "bg-muted ",
             'group relative flex h-12 justify-between px-4 py-2 mx-2.5 text-base duration-200 hover:bg-muted hover:no-underline rounded-md'
           )}>

@@ -1,5 +1,5 @@
 
-import { Logo } from "./logo";
+import { Logo } from "../../../../components/logo";
 import { Actions } from "./actions";
 import { Menu } from "./menu";
 
