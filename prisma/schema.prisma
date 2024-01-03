@@ -35,22 +35,38 @@ model Account {
 }
 
 model User {
-  id                    String                 @id @default(cuid())
-  name                  String?
-  email                 String                 @unique
-  description           String?
-  hashedPassword        String
-  emailVerified         DateTime?
-  image                 String?
-  accounts              Account[]
-  virtualTours          VirtualTour[]
-  tags                  Tag[]
+  id             String        @id @default(cuid())
+  name           String?
+  email          String        @unique
+  description    String?
+  hashedPassword String
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  virtualTours   VirtualTour[]
+  tags           Tag[]
+  routes         Route[]
   pageInfo              PageInfo?
   role                  UserRole               @default(USER)
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
   createdAt             DateTime               @default(now())
   updatedAt             DateTime               @updatedAt
+}
+
+model Route {
+  id        String   @id @default(uuid())
+  parentId  String?  @map("parentId") // allows null for top-level routes
+  parent    Route?   @relation("children", fields: [parentId], references: [id])
+  children  Route[]  @relation("children")
+  name      String
+  href      String   @unique
+  icon      String
+  color     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 model Settings {
@@ -100,7 +116,7 @@ model VirtualTour {
   id          String   @id @default(uuid())
   User        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   coverSrc    String?
-  userId      String  
+  userId      String
   title       String?
   description String?
   link        String?
@@ -115,7 +131,7 @@ model Tag {
   id           String        @id @default(uuid())
   name         String        @unique
   virtualTours VirtualTour[]
-  userId       String        
+  userId       String
   User         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
