@@ -43,15 +43,18 @@ export const MenuItem = ({ item, pathname }: { pathname: string, item: Navigatio
               <item.icon
                 className={cn(
                   'h-6 w-6 shrink-0 !rotate-0',
-                  // item.color
+
                 )}
+                style={{
+                  color: item.color
+                }}
                 aria-hidden="true"
               />
             </Hint>
             {
 
               <Text className={cn("absolute left-12 duration-200 ",
-              !matches && collapsed && " opacity-0 transition-all duration-300"
+                !matches && collapsed && " opacity-0 transition-all duration-300"
               )}>
                 {item.name}
               </Text>
@@ -84,8 +87,10 @@ export const MenuItem = ({ item, pathname }: { pathname: string, item: Navigatio
               <item.icon
                 className={cn(
                   'h-6 w-6 shrink-0 !rotate-0',
-                  // item.color
                 )}
+                style={{
+                  color: item.color
+                }}
                 aria-hidden="true"
               />
             </Hint>

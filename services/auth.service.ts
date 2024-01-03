@@ -18,7 +18,11 @@ export class AuthService {
             banner: true
           }
         },
-        virtualTours: true,
+        virtualTours: {
+          include: {
+            tags: true
+          }
+        },
         tags: true,
       }
     });

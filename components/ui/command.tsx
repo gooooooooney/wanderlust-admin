@@ -57,7 +57,7 @@ const CommanCustomInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, children, ...props }, ref) => (
-  <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
+  <div className="flex items-center border-b px-3 flex-wrap" cmdk-input-wrapper="">
     {children}
     <CommandPrimitive.Input
       ref={ref}

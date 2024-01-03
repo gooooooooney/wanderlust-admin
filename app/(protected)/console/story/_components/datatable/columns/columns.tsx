@@ -1,15 +1,12 @@
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 
-import { Banner, VirtualTour } from "@prisma/client";
+import {  Tag, VirtualTour } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import Image from "next/image";
 import { EditableCell } from "./editable-cell";
 import { ActionsCell } from "./actions-cell";
-import Link from "next/link";
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
 import { LinkPreview } from "./link-preview";
 import { ImageCell } from "./image-cell";
+import { Tags } from "../../tags";
 
 export const columns: ColumnDef<VirtualTour>[] = [
   {
@@ -37,9 +34,11 @@ export const columns: ColumnDef<VirtualTour>[] = [
   {
     accessorKey: "order",
     header: "Order",
+    size: 20,
     cell: (props) => (
-      <EditableCell type="number" {...props} className="text-sm text-muted-foreground" />
-    ),  },
+      <EditableCell type="number" {...props} className="text-sm text-muted-foreground w-20" />
+    ),
+  },
   {
     accessorKey: "link",
     header: "Link",
@@ -65,6 +64,13 @@ export const columns: ColumnDef<VirtualTour>[] = [
     cell: (props) => (
       <EditableCell {...props} className="text-sm text-muted-foreground" />
     ),
+  },
+  {
+    accessorKey: "tags",
+    header: "Tag",
+    cell: (props) => {
+      return <Tags className="w-40 gap-2" tags={props.getValue() as any || []} />
+    },
   },
   {
     accessorKey: "coverSrc",

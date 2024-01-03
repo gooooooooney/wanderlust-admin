@@ -8,6 +8,7 @@ import {
   UserIcon,
   BookOpenTextIcon,
 } from "lucide-react";
+import { generateColor } from "./utils";
 
 export type Navigation = {
   name: string;
@@ -48,43 +49,43 @@ const randomColor = () => {
 
 export const navigation: Navigation[] = [
   {
-    color: randomColor(),
+    color: generateColor("dashboard").backgroundColor,
     name: "Dashboard",
     href: "/",
     icon: LayoutDashboardIcon,
   },
   {
-    color: randomColor(),
+    color: generateColor("users").backgroundColor,
     name: "Users",
     href: "/users",
     icon: UserIcon,
   },
   {
-    color: randomColor(),
+    color: generateColor("settings").backgroundColor,
     name: "Setting",
     href: "/settings",
     icon: SettingsIcon,
   },
   {
-    color: randomColor(),
+    color: generateColor("console").backgroundColor,
     name: "Console",
     href: "/console",
     icon: LayoutTemplateIcon,
     children: [
       {
-        color: randomColor(),
+        color: generateColor("story").backgroundColor,
         name: "Story",
         href: "/console/story",
         icon: BookOpenTextIcon,
       },
       {
-        color: randomColor(),
+        color: generateColor("introduction").backgroundColor,
         name: "Introduction",
         href: "/console/introduction",
         icon: RocketIcon,
       },
       {
-        color: randomColor(),
+        color: generateColor("project").backgroundColor,
         name: "Project",
         href: "/console/project",
         icon: FolderKanbanIcon,

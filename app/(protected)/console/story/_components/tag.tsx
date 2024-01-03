@@ -15,7 +15,8 @@ export const ToggleOne = ({ name }: ToggleOneProps) => {
       size="sm"
       className="hover:bg-transparent hover:text-inherit h-6 "
       style={{
-        backgroundColor: generateColor(name),
+        backgroundColor: generateColor(name).backgroundColor,
+        color: generateColor(name).color,
       }}
       value={name}
       aria-label={`Toggle ${name}`}

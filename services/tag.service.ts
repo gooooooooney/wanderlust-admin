@@ -21,4 +21,12 @@ export class TagService {
       },
     });
   }
+
+  static async deleteTag(id: string) {
+    return await db.tag.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

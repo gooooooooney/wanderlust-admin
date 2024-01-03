@@ -12,14 +12,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AddVirtualTourSchema } from '@/schemas'
 import * as z from 'zod'
 import { Btn } from '@/components/btn'
-import { Switch } from '@radix-ui/react-switch'
 import { addNewVirtualTour } from '@/actions/virtual-tour'
 import { toast } from 'sonner'
 import { useToggle } from 'usehooks-ts'
@@ -30,7 +28,8 @@ type AddDataProps = {
   tags: Tag[]
 }
 
-export function AddData({tags}: AddDataProps) {
+export function AddData({ }: AddDataProps) {
+
   const [isPending, startTransition] = useTransition();
   const [open, toggle, setOpen] = useToggle()
   const form = useForm<z.infer<typeof AddVirtualTourSchema>>({
@@ -47,9 +46,13 @@ export function AddData({tags}: AddDataProps) {
   });
   function onSubmit(values: z.infer<typeof AddVirtualTourSchema>) {
     startTransition(() => {
-      addNewVirtualTour(values).then(() => {
-        toast.success('Added new virtual tour')
-        toggle()
+      toast.promise(addNewVirtualTour(values), {
+        loading: 'Adding new virtual tour',
+        success: () => {
+          toggle()
+          return 'Added new virtual tour'
+        },
+        error: 'Failed to add new virtual tour'
       })
     })
   }
@@ -58,7 +61,7 @@ export function AddData({tags}: AddDataProps) {
       <DialogTrigger asChild>
         <Button variant="default">Add</Button>
       </DialogTrigger>
-      <DialogContent className=" ml-auto">
+      <DialogContent className="  ml-auto">
         <DialogHeader>
           <DialogTitle>Add new Data</DialogTitle>
           <DialogDescription>
@@ -110,12 +113,10 @@ export function AddData({tags}: AddDataProps) {
               control={form.control}
               name="tags"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className='flex flex-col'>
                   <FormLabel>Tag</FormLabel>
                   <FormControl>
-                    <TagPopover tags={tags} {...field} >
-                      open
-                    </TagPopover>
+                    <TagPopover onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -141,7 +142,7 @@ export function AddData({tags}: AddDataProps) {
                 <FormItem>
                   <FormLabel>Link</FormLabel>
                   <FormControl>
-                    
+
                     <Input placeholder="https://example.com" {...field} />
                   </FormControl>
                   <FormMessage />
@@ -162,13 +163,10 @@ export function AddData({tags}: AddDataProps) {
               )}
             />
             <div className='text-right'>
-              <Btn  disabled={isPending} type="submit">Add</Btn>
+              <Btn disabled={isPending} type="submit">Add</Btn>
             </div>
           </form>
         </Form>
-        {/* <DialogFooter>
-          
-        </DialogFooter> */}
       </DialogContent>
     </Dialog>
   )

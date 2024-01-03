@@ -20,6 +20,7 @@ export class VirtualTourService {
 
   static async createVirtualTour(values: VirtualTour) {
     const user = await AuthService.getSelf()
+    console.log(values)
     return await db.virtualTour.create({
       data: {
         ...values,

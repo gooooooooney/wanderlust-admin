@@ -8,6 +8,11 @@ import * as z from "zod";
 export const addNewVirtualTour = async (values: z.infer<typeof AddVirtualTourSchema>) => {
   const params = {
     ...values,
+    tags: {
+      connect: values.tags.map((tag) => ({
+        id: tag.id
+      }))
+    },
     order: parseInt(values.order),
   }
   const result = await VirtualTourService.createVirtualTour(params)
@@ -16,10 +21,16 @@ export const addNewVirtualTour = async (values: z.infer<typeof AddVirtualTourSch
 }
 
 export const updateVirtualTour = async (id: string, values: Partial<z.infer<typeof AddVirtualTourSchema>>) => {
-  const { order, ...rest } = values
+  const { order, tags, ...rest } = values
   const params = {
     ...rest,
+    tags: {
+      connect: tags?.map((tag) => ({
+        id: tag.id
+      }))
+    }
   } as (typeof rest & { order?: number })
+
   if (values.order) {
     params.order = parseInt(values.order)
   }

@@ -22,13 +22,15 @@ import { Btn } from '@/components/btn'
 import { Switch } from '@radix-ui/react-switch'
 import { addNewVirtualTour, updateVirtualTour } from '@/actions/virtual-tour'
 import { toast } from 'sonner'
-import { VirtualTour } from '@prisma/client'
+import { Tag, VirtualTour } from '@prisma/client'
 import { UpdateIcon } from '@radix-ui/react-icons'
 import { useToggle } from 'usehooks-ts'
+import { TagPopover } from '../tag-popover'
+import { useGetTags } from '@/hooks/use-get-tags'
 
 
 
-export function EditData({ row }: { row: VirtualTour }) {
+export function EditData({ row }: { row: VirtualTour & {tags: Tag[] }}) {
   const [isPending, startTransition] = useTransition();
   const dialogRef = React.useRef<HTMLDivElement>(null);
   const [open, toggle, setOpen] = useToggle()
@@ -39,15 +41,20 @@ export function EditData({ row }: { row: VirtualTour }) {
       description: row.description!,
       author: row.author!,
       link: row.link!,
+      tags: row.tags!,
       coverSrc: row.coverSrc!,
       order: row.order.toString(),
     },
   });
   function onSubmit(values: z.infer<typeof AddVirtualTourSchema>) {
     startTransition(() => {
-      updateVirtualTour(row.id, values).then(() => {
-        toast.success('Updated virtual tour')
-        toggle()
+      toast.promise(updateVirtualTour(row.id, values), {
+        loading: 'Updating virtual tour',
+        success: () => {
+          toggle()
+          return 'Updated virtual tour'
+        },
+        error: 'Failed to update virtual tour'
       })
     })
   }
@@ -115,6 +122,19 @@ export function EditData({ row }: { row: VirtualTour }) {
                   <FormLabel>Order</FormLabel>
                   <FormControl>
                     <Input type='number' placeholder="1|2|3" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+             <FormField
+              control={form.control}
+              name="tags"
+              render={({ field }) => (
+                <FormItem className='flex flex-col'>
+                  <FormLabel>Tag</FormLabel>
+                  <FormControl>
+                    <TagPopover  selectTags={row.tags} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
