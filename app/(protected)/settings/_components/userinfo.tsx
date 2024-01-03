@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { UserAvatar } from "@/components/user-avatar";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { UploadDropzone, getUploadThingKeys } from "@/lib/uploadthing";
@@ -39,17 +40,22 @@ const formSchema = z.object({
   username: z.string().min(2).max(50, {
     message: "Username must be between 2 and 50 characters",
   }),
+  description: z.string().max(160, {
+    message: "Description must be less than 160 characters",
+  }),
   isTwoFactorEnabled: z.optional(z.boolean()),
 });
 
 interface SettingAvatarProps {
   initialUsername: string | null;
   initialImage: string | null;
+  initialDescription: string | null;
 }
 
 export const SettingUserInfo = ({
   initialImage,
   initialUsername,
+  initialDescription,
 }: SettingAvatarProps) => {
 
   const user = useCurrentUser();
@@ -62,6 +68,7 @@ export const SettingUserInfo = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: initialUsername || "",
+      description: initialDescription || ""
     },
   });
 
@@ -69,7 +76,11 @@ export const SettingUserInfo = ({
     setField("username");
 
     startTransition(() => {
-      updateUser({ name: values.username, isTwoFactorEnabled: values.isTwoFactorEnabled })
+      updateUser({
+        name: values.username,
+        description: values.description,
+        isTwoFactorEnabled: values.isTwoFactorEnabled
+      })
         .then(() => {
           toast.success("Username updated");
         })
@@ -110,7 +121,19 @@ export const SettingUserInfo = ({
                 <FormControl>
                   <Input placeholder="username" {...field} />
                 </FormControl>
-                <FormDescription>This is your username.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Description</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="description" {...field} />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
