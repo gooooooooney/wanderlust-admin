@@ -132,7 +132,7 @@ export const SettingUserInfo = ({
               <FormItem>
                 <FormLabel>Description</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="description" {...field} />
+                  <Textarea rows={5} placeholder="description" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
