@@ -34,7 +34,7 @@ export const SettingSignIn = ({
   const onRemove = () => {
     startTransition(() => {
       deleteFiles(getUploadThingKeys([image])).then(res => {
-        if (res.success) {
+        if (res?.success) {
           updateSetting({ signInCoverImage: null })
             .then(() => {
               setImage("")

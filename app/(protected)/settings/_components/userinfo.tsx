@@ -40,8 +40,8 @@ const formSchema = z.object({
   username: z.string().min(2).max(50, {
     message: "Username must be between 2 and 50 characters",
   }),
-  description: z.string().max(160, {
-    message: "Description must be less than 160 characters",
+  description: z.string().max(500, {
+    message: "Description must be less than 500 characters",
   }),
   isTwoFactorEnabled: z.optional(z.boolean()),
 });
@@ -92,7 +92,7 @@ export const SettingUserInfo = ({
     setField("image");
     startTransition(() => {
       deleteFiles(getUploadThingKeys([image])).then((res) => {
-        if (res.success) {
+        if (res?.success) {
           updateUser({ image: null })
             .then(() => {
               setImage("");
