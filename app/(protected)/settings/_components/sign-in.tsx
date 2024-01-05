@@ -1,11 +1,17 @@
-"use client"
+"use client";
 import { updateSetting } from "@/actions/setting";
 import { deleteFiles } from "@/actions/uploadthing";
 import { updateUser } from "@/actions/user";
 import { Btn } from "@/components/btn";
 import { Hint } from "@/components/hint";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UploadDropzone, getUploadThingKeys } from "@/lib/uploadthing";
@@ -17,48 +23,42 @@ import { useRouter } from "next/navigation";
 import { useRef, ElementRef, useTransition, useState } from "react";
 import { toast } from "sonner";
 
-
 interface SettingAvatarProps {
-  initialSignInImage?: string | null
-};
+  initialSignInImage?: string | null;
+}
 
-export const SettingSignIn = ({
-  initialSignInImage,
-}: SettingAvatarProps) => {
-  const router = useRouter()
+export const SettingSignIn = ({ initialSignInImage }: SettingAvatarProps) => {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [image, setImage] = useState(initialSignInImage || "")
-
-
+  const [image, setImage] = useState(initialSignInImage || "");
 
   const onRemove = () => {
     startTransition(() => {
-      deleteFiles(getUploadThingKeys([image])).then(res => {
+      deleteFiles(getUploadThingKeys([image])).then((res) => {
         if (res?.success) {
           updateSetting({ signInCoverImage: null })
             .then(() => {
-              setImage("")
+              setImage("");
               toast.success("Image removed");
             })
             .catch(() => {
-              toast.error("Something went wrong")
+              toast.error("Something went wrong");
             });
         } else {
-          toast.error("Delete failed")
+          toast.error("Delete failed");
         }
-      })
-
-    })
-  }
+      });
+    });
+  };
   return (
-    <Card >
+    <Card>
       <CardHeader>
         <Label>Upload In Cover Image</Label>
       </CardHeader>
       <CardDescription className="px-6 mb-4">
         This is your avatar.
       </CardDescription>
-      <CardContent >
+      <CardContent>
         <div className="max-w-md ">
           {image ? (
             <div className="relative aspect-video rounded-xl overflow-hidden ">
@@ -70,43 +70,31 @@ export const SettingSignIn = ({
                     onClick={onRemove}
                     className="h-auto w-auto p-1.5"
                   >
-                    {
-                      isPending ? (
-                        <ReloadIcon className="h-4 w-4 animate-spin" />
-                      )
-                        : (
-                          <TrashIcon className="h-4 w-4" />
-                        )
-
-                    }
+                    {isPending ? (
+                      <ReloadIcon className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <TrashIcon className="h-4 w-4" />
+                    )}
                   </Button>
                 </Hint>
               </div>
-              <Image
-                alt="Image"
-                src={image}
-                fill
-                className="object-cover"
-              />
+              <Image alt="Image" src={image} fill className="object-cover" />
             </div>
           ) : (
             <div className="rounded-xl  outline-dashed outline-muted">
               <UploadDropzone
                 endpoint="signInLoader"
-                className={cn(
-                  [
-                    "ut-label:text-primary",
-                    "ut-allowed-content:text-primary ",
-                    "ut-button:bg-primary ut-button:text-primary-foreground ut-button:shadow ut-button:hover:bg-primary/90 ut-button:ut-readying:bg-primary-500/50",
-                  ]
-                )}
+                className={cn([
+                  "ut-label:text-primary",
+                  "ut-allowed-content:text-primary ",
+                  "ut-button:bg-primary ut-button:text-primary-foreground ut-button:shadow ut-button:hover:bg-primary/90 ut-button:ut-readying:bg-primary-500/50",
+                ])}
                 onClientUploadComplete={(res) => {
                   setImage(res?.[0]?.url);
                   router.refresh();
                 }}
               />
             </div>
-
           )}
         </div>
         <div className="mt-4">
@@ -121,8 +109,8 @@ export const SettingSignIn = ({
           />
         </div>
         <Btn
-        disabled={isPending}
-        className="mt-4"
+          disabled={isPending}
+          className="mt-4"
           onClick={() => {
             startTransition(() => {
               updateSetting({ signInCoverImage: image })
@@ -130,14 +118,14 @@ export const SettingSignIn = ({
                   toast.success("Sign-in image updated");
                 })
                 .catch(() => {
-                  toast.error("Something went wrong")
+                  toast.error("Something went wrong");
                 });
-            })
+            });
           }}
         >
           Save
         </Btn>
       </CardContent>
     </Card>
-  )
-}
+  );
+};

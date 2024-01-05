@@ -57,7 +57,6 @@ export const SettingUserInfo = ({
   initialUsername,
   initialDescription,
 }: SettingAvatarProps) => {
-
   const user = useCurrentUser();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -68,7 +67,7 @@ export const SettingUserInfo = ({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: initialUsername || "",
-      description: initialDescription || ""
+      description: initialDescription || "",
     },
   });
 
@@ -79,7 +78,7 @@ export const SettingUserInfo = ({
       updateUser({
         name: values.username,
         description: values.description,
-        isTwoFactorEnabled: values.isTwoFactorEnabled
+        isTwoFactorEnabled: values.isTwoFactorEnabled,
       })
         .then(() => {
           toast.success("Username updated");
@@ -217,6 +216,32 @@ export const SettingUserInfo = ({
               </div>
             )}
           </div>
+          <div className="mt-4">
+            <Label>Or Set Avatar src</Label>
+            <Input
+              className="mt-2"
+              placeholder="https://example.com/image.png"
+              value={image}
+              onChange={(e) => {
+                setImage(e.target.value);
+              }}
+            />
+          </div>
+          <Btn
+            disabled={isPending}
+            className="mt-4"
+            onClick={() => {
+              startTransition(() => {
+                toast.promise(updateUser({ image }), {
+                  loading: "Updating avatar...",
+                  success: "Avatar updated",
+                  error: "Something went wrong",
+                })
+              });
+            }}
+          >
+            Save
+          </Btn>
         </CardContent>
       </Card>
     </div>

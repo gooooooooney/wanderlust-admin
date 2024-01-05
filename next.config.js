@@ -30,6 +30,11 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
+                hostname: 'avatars.githubusercontent.com',
+                port: ""
+            },
+            {
+                protocol: 'https',
                 hostname: 'realsee.jp',
                 port: ""
             }
