@@ -15,6 +15,7 @@ export const updateUser = async (values: Partial<User>) => {
     name: values.name,
     image: values.image,
     description: values.description,
+    videoSrc: values.videoSrc,
     isTwoFactorEnabled: values.isTwoFactorEnabled,
   };
 

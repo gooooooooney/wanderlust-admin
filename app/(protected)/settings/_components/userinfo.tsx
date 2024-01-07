@@ -43,6 +43,9 @@ const formSchema = z.object({
   description: z.string().max(500, {
     message: "Description must be less than 500 characters",
   }),
+  videoSrc: z.string().url({
+    message: "Video src must be a valid url",
+  }),
   isTwoFactorEnabled: z.optional(z.boolean()),
 });
 
@@ -78,10 +81,11 @@ export const SettingUserInfo = ({
       updateUser({
         name: values.username,
         description: values.description,
+        videoSrc: values.videoSrc,
         isTwoFactorEnabled: values.isTwoFactorEnabled,
       })
         .then(() => {
-          toast.success("Username updated");
+          toast.success("Userinfo updated");
         })
         .catch(() => toast.error("Something went wrong"));
     });
@@ -132,6 +136,19 @@ export const SettingUserInfo = ({
                 <FormLabel>Description</FormLabel>
                 <FormControl>
                   <Textarea rows={5} placeholder="description" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="videoSrc"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Video</FormLabel>
+                <FormControl>
+                  <Input type="url" placeholder="https://example.mp4" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
