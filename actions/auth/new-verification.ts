@@ -1,6 +1,5 @@
 "use server";
 
-import { db } from "@/lib/db";
 import { UserService } from "@/services/user.service";
 import { VerificationTokenService } from "@/services/verificationToken.service";
 

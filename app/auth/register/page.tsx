@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { SignUpForm } from "./_components/signin-form";
+import { SignUpForm } from "./_components/signup-form";
 import { Text } from "@/components/typography/text";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";

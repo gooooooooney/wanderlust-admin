@@ -37,10 +37,10 @@ export const login = async (
       existingUser.email
     );
 
-    await sendVerificationEmail(
-      verificationToken.email,
-      verificationToken.token
-    );
+    // await sendVerificationEmail(
+    //   verificationToken.email,
+    //   verificationToken.token
+    // );
 
     return { success: "Confirmation email sent!" };
   }
