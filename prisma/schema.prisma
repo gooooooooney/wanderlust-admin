@@ -130,7 +130,7 @@ model VirtualTour {
 
 model Tag {
   id           String        @id @default(uuid())
-  name         String        @unique
+  name         String        
   virtualTours VirtualTour[]
   userId       String
   User         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
