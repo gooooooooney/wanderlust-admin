@@ -14,7 +14,7 @@ export default async function SettingsPage() {
       <Heading title="Settings" description="Manage your account settings." />
      
       <div className="flex flex-col gap-y-4">
-        <SettingUserInfo initialImage={user.image} initialUsername={user.name} initialDescription={user.description} />
+        <SettingUserInfo initialImage={user.image} initialUsername={user.name} initialDescription={user.description} initialVideoSrc={user.videoSrc} />
         <SettingSignIn initialSignInImage={settings?.signInCoverImage} />
       </div>
     </div>

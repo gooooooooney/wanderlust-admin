@@ -53,12 +53,14 @@ interface SettingAvatarProps {
   initialUsername: string | null;
   initialImage: string | null;
   initialDescription: string | null;
+  initialVideoSrc: string | null;
 }
 
 export const SettingUserInfo = ({
   initialImage,
   initialUsername,
   initialDescription,
+  initialVideoSrc
 }: SettingAvatarProps) => {
   const user = useCurrentUser();
   const router = useRouter();
@@ -71,6 +73,7 @@ export const SettingUserInfo = ({
     defaultValues: {
       username: initialUsername || "",
       description: initialDescription || "",
+      videoSrc: initialVideoSrc || "",
     },
   });
 
