@@ -72,7 +72,7 @@ export const DataTableVt = ({ vts }: { vts: VirtualTour[] }) => {
 
   const table = useReactTable({
     data,
-    columns,
+    columns: columns as any,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),

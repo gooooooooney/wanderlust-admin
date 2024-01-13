@@ -8,7 +8,7 @@ import { LinkPreview } from "./link-preview";
 import { ImageCell } from "./image-cell";
 import { Tags } from "../../tags";
 
-export const columns: ColumnDef<VirtualTour>[] = [
+export const columns: ColumnDef<VirtualTour & {tags: Tag[] }>[] = [
   {
     id: "select",
     header: ({ table }) => (

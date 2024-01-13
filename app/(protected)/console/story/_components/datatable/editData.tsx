@@ -26,7 +26,6 @@ import { Tag, VirtualTour } from '@prisma/client'
 import { UpdateIcon } from '@radix-ui/react-icons'
 import { useToggle } from 'usehooks-ts'
 import { TagPopover } from '../tag-popover'
-import { useGetTags } from '@/hooks/use-get-tags'
 
 
 

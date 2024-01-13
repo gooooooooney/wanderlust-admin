@@ -9,7 +9,7 @@ import { FormSuccess } from "@/components/auth/form-success";
 import { FormError } from "@/components/auth/form-error";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 
-export const NewVerificationPage = () => {
+const NewVerificationPage = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
 

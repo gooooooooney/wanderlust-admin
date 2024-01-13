@@ -1,8 +1,8 @@
-import { Banner, VirtualTour } from "@prisma/client";
+import { Banner, Tag, VirtualTour } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { Primitive } from "react-hook-form";
 
-export type Cell = ColumnDef<VirtualTour>["cell"]
+export type Cell = ColumnDef<VirtualTour & {tags: Tag[] }>["cell"]
 
 
 type ExtractFunction<T extends ((...args: any) => any) | Primitive> = T extends (...args: infer P) => any ? P : never;

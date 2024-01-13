@@ -22,7 +22,7 @@ import { newPassword } from "@/actions/auth/new-password";
 import { FormError } from "@/components/auth/form-error";
 import { FormSuccess } from "@/components/auth/form-success";
 
-export const NewPassword = () => {
+const NewPasswordPage = () => {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
 
@@ -90,4 +90,4 @@ export const NewPassword = () => {
   );
 };
 
-export default NewPassword;
+export default NewPasswordPage;
