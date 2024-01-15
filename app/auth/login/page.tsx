@@ -33,7 +33,7 @@ const SignInPage: React.FC = async () => {
                   <div className="w-full border-t border-gray-200" />
                 </div>
                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="bg-white dark:bg-black px-6 text-gray-900">
+                  <span className="bg-background px-6 ">
                     Or continue with
                   </span>
                 </div>
