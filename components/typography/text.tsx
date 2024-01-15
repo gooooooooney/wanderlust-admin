@@ -11,18 +11,6 @@ export function Text({ className, ...props }: React.ComponentPropsWithoutRef<'p'
   )
 }
 
-// export function TextLink({ className, ...props }: React.ComponentPropsWithoutRef<typeof Link>) {
-//   return (
-//     <Link
-//       {...props}
-//       className={cn(
-//         className,
-//         'text-zinc-950 underline decoration-zinc-950/50 data-[hover]:decoration-zinc-950 dark:text-white dark:decoration-white/50 dark:data-[hover]:decoration-white'
-//       )}
-//     />
-//   )
-// }
-
 export function Description({ className, ...props }: React.ComponentPropsWithoutRef<'h1'>) {
   return (
     <p className={cn('text-sm text-muted-foreground', className)} {...props} />
