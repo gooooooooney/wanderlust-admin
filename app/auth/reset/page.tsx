@@ -36,7 +36,7 @@ const SignInPage: React.FC = async () => {
       <div className="relative hidden w-0 flex-1 lg:block">
         <Image
           fill
-          className="absolute inset-0 h-full w-full object-cover object-top"
+          className="absolute inset-0 h-full w-full object-cover object-top animate-vertical-move"
           src={setting?.signInCoverImage || "https://pic.imgdb.cn/item/6593a1f0c458853aef2954ea.jpg"}
           alt=""
         />
