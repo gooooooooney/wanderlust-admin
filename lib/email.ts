@@ -18,19 +18,12 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-export const sendEmail = (payload: EmailPayload) => {
-
+export const sendEmail = async (payload: EmailPayload) => {
 
   // https://stackoverflow.com/questions/65631481/nodemailer-in-vercel-not-sending-email-in-production
-  return new Promise((resolve, reject) => {
-    transporter.sendMail({
-      from: `noreply <${process.env.MAIL_USER}>`,
-      ...payload,
-    }).then((info) => {
-      resolve(info);
-    }
-    ).catch((error) => {
-      reject(error);
-    });
-  });
+  await transporter.sendMail({
+    from: `noreply <${process.env.MAIL_USER}>`,
+    ...payload,
+  })
+  return true;
 }
