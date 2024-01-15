@@ -6,6 +6,7 @@ import Image from "next/image";
 import { SettingService } from "@/services/setting.service";
 import { RestForm } from "./_components/resetForm";
 import Link from "next/link";
+import { Logo } from "@/components/logo";
 
 const SignInPage: React.FC = async () => {
   const setting = await SettingService.getSetting();
@@ -14,11 +15,7 @@ const SignInPage: React.FC = async () => {
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96 ">
           <div>
-            <img
-              className="h-10 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt="Your Company"
-            />
+            <Logo size="lg" />
             <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight ">
               Reset
             </h2>
@@ -40,7 +37,7 @@ const SignInPage: React.FC = async () => {
         <Image
           fill
           className="absolute inset-0 h-full w-full object-cover object-top"
-          src={setting?.signInCoverImage || "/img/seaside.jpeg"}
+          src={setting?.signInCoverImage || "https://pic.imgdb.cn/item/6593a1f0c458853aef2954ea.jpg"}
           alt=""
         />
       </div>
