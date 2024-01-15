@@ -26,7 +26,6 @@ export const updateUser = async (values: Partial<User>) => {
 
 
   const user = await UserService.updateUser(self.id, validData)
-  console.log({user})
 
   revalidatePath("/");
 

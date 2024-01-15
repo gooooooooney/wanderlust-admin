@@ -17,7 +17,7 @@ import { Btn } from "@/components/btn";
 import { FormError } from "../../../../components/auth/form-error";
 import { FormSuccess } from "../../../../components/auth/form-success";
 import { ResetSchema } from "@/schemas";
-import { reset } from "@/actions/reset";
+import { reset } from "@/actions/auth/reset";
 
 export function RestForm() {
   const [isPending, startTransition] = useTransition();

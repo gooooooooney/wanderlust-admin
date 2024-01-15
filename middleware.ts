@@ -34,7 +34,6 @@ export default auth((req) => {
     if (nextUrl.search) {
       callbackUrl += nextUrl.search;
     }
-    console.log(nextUrl.pathname)
 
     const encodedCallbackUrl = encodeURIComponent(callbackUrl);
 
